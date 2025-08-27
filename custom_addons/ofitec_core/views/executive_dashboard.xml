@@ -134,7 +134,8 @@
                                                     </div>
                                                     <div class="oe_budget_item">
                                                         <span class="oe_label">Varianza:</span>
-                                                        <span class="oe_value oe_<field name="variance_percentage" readonly="1" widget="percentage"/>">
+                                                        <span class="oe_value">
+                                                            <field name="variance_percentage" readonly="1" widget="percentage"/>
                                                             <field name="variance_amount" widget="monetary" readonly="1"/>
                                                         </span>
                                                     </div>

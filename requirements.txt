@@ -1,5 +1,5 @@
-# OFITEC.AI - Requirements
-odoo>=16.0,<17.0
+# OFITEC.AI - Requirements (dependencias adicionales para módulos personalizados)
+# Nota: Odoo se instala a través de Docker
 psycopg2-binary
 python-decouple
 requests
@@ -9,6 +9,7 @@ torch
 pandas
 numpy
 scikit-learn
+xgboost  # Para modelos de IA avanzados
 faiss-cpu
 pydrive
 twilio  # Para WhatsApp API

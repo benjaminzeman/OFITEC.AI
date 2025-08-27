@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_form_inherit" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="project_complexity"/>
+                <field name="estimated_budget"/>
+                <field name="actual_budget"/>
+                <field name="budget_variance" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

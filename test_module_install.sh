@@ -87,8 +87,8 @@ except Exception as e:
         echo "  Revisando external IDs en $file:" >> $LOG_FILE
         grep "ir.model" "$file" >> $LOG_FILE 2>&1
 
-        # Verificar si hay referencias problemáticas
-        if grep -q "model_ofitec_core" "$file"; then
+        # Verificar si hay referencias problemáticas (no precedidas por 'ir.')
+        if grep -q "^[^,]*model_ofitec_core" "$file" || grep -q ",model_ofitec_core" "$file"; then
             echo "  ⚠ ADVERTENCIA: Encontrada referencia 'model_ofitec_core' en $file" >> $LOG_FILE
             echo "    Debería ser 'ir.model_ofitec_core'" >> $LOG_FILE
         fi

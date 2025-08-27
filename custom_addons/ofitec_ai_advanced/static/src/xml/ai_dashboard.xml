@@ -181,15 +181,15 @@
                                                         </div>
                                                         <div class="model-details">
                                                             <small class="text-muted d-block">
-                                                                Type: <strong t-esc="model.type"/>
-                                                            </strong></small>
+                                                                Type: <strong t-esc="model.type"></strong>
+                                                            </small>
                                                             <small class="text-muted d-block">
-                                                                Algorithm: <strong t-esc="model.algorithm"/>
-                                                            </strong></small>
+                                                                Algorithm: <strong t-esc="model.algorithm"></strong>
+                                                            </small>
                                                             <t t-if="model.accuracy">
                                                                 <small class="text-muted d-block">
-                                                                    Accuracy: <strong t-esc="formatPercentage(model.accuracy)"/>
-                                                                </strong></small>
+                                                                    Accuracy: <strong t-esc="formatPercentage(model.accuracy)"></strong>
+                                                                </small>
                                                             </t>
                                                         </div>
                                                         <div class="model-actions mt-3">

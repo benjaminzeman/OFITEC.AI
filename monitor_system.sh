@@ -14,11 +14,11 @@ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" >> $LOG_FILE 2>&1
 
 # Verificar logs de Odoo en busca de errores
 echo "=== Revisando logs de Odoo ===" >> $LOG_FILE
-docker logs ofitec-odoo --tail 50 2>&1 | grep -i error >> $ERROR_LOG 2>&1 || echo "No se encontraron errores nuevos en Odoo" >> $LOG_FILE
+docker logs ofitecai-odoo-1 --tail 50 2>&1 | grep -i error >> $ERROR_LOG 2>&1 || echo "No se encontraron errores nuevos en Odoo" >> $LOG_FILE
 
 # Verificar estado de la base de datos
 echo "=== Estado de PostgreSQL ===" >> $LOG_FILE
-docker exec ofitec-postgres pg_isready -U odoo >> $LOG_FILE 2>&1
+docker exec ofitecai-db-1 pg_isready -U odoo >> $LOG_FILE 2>&1
 
 # Ejecutar pruebas rápidas
 echo "=== Ejecutando pruebas rápidas ===" >> $LOG_FILE
@@ -67,35 +67,18 @@ find custom_addons/ -name "*.csv" | xargs grep -l "ir.model" | while read file; 
 done
 
 # Simular instalación de módulos para detectar errores
-echo "=== Simulación de instalación de módulos ===" >> $LOG_FILE
-python -c "
-import os
-import sys
-import importlib.util
-
-# Agregar custom_addons al path
-sys.path.insert(0, 'custom_addons')
-
-# Lista de módulos OFITEC a verificar
-modulos_ofitec = [
-    'ofitec_core', 'ofitec_security', 'ofitec_ai_advanced', 
-    'ofitec_whatsapp', 'ofitec_project', 'ofitec_qhse',
-    'ofitec_visual', 'ofitec_optimizer', 'ofitec_capacity',
-    'ofitec_deployment', 'ofitec_backup'
-]
-
-for modulo in modulos_ofitec:
-    try:
-        spec = importlib.util.spec_from_file_location(modulo, f'custom_addons/{modulo}/__init__.py')
-        if spec and spec.loader:
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            print(f'✓ {modulo}: Importación exitosa')
-        else:
-            print(f'✗ {modulo}: No se pudo cargar el módulo')
-    except Exception as e:
-        print(f'✗ {modulo}: Error de importación - {e}')
-" >> $LOG_FILE 2>&1
+echo "=== Verificación de estructura de módulos ===" >> $LOG_FILE
+for module in ofitec_core ofitec_security ofitec_ai_advanced ofitec_whatsapp ofitec_project ofitec_qhse ofitec_visual ofitec_optimizer ofitec_capacity ofitec_deployment ofitec_backup; do
+    if [ -d "custom_addons/$module" ]; then
+        if [ -f "custom_addons/$module/__init__.py" ] && [ -f "custom_addons/$module/__manifest__.py" ]; then
+            echo "✓ $module: Estructura correcta (__init__.py y __manifest__.py presentes)" >> $LOG_FILE
+        else
+            echo "✗ $module: Estructura incompleta (faltan archivos __init__.py o __manifest__.py)" >> $LOG_FILE
+        fi
+    else
+        echo "✗ $module: Directorio no encontrado" >> $LOG_FILE
+    fi
+done
 
 # Verificar archivos de configuración
 echo "=== Verificación de configuración ===" >> $LOG_FILE

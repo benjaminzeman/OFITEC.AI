@@ -10,13 +10,13 @@ echo "$(date): Iniciando prueba de instalación dentro de Docker" > $LOG_FILE
 echo "==========================================" >> $LOG_FILE
 
 # Verificar que Docker esté corriendo
-if ! docker ps | grep -q ofitec-odoo; then
-    echo "❌ El contenedor ofitec-odoo no está ejecutándose" >> $LOG_FILE
+if ! docker ps | grep -q ofitecai-odoo-1; then
+    echo "❌ El contenedor ofitecai-odoo-1 no está ejecutándose" >> $LOG_FILE
     echo "Ejecuta: docker-compose up -d" >> $LOG_FILE
     exit 1
 fi
 
-echo "✅ Contenedor ofitec-odoo está ejecutándose" >> $LOG_FILE
+echo "✅ Contenedor ofitecai-odoo-1 está ejecutándose" >> $LOG_FILE
 
 # Función para probar instalación de un módulo dentro del contenedor
 test_module_in_docker() {
@@ -30,7 +30,7 @@ test_module_in_docker() {
     fi
 
     # Ejecutar prueba dentro del contenedor
-    docker exec ofitec-odoo bash -c "
+    docker exec ofitecai-odoo-1 bash -c "
         cd /mnt/extra-addons
         python -c \"
 import sys
@@ -48,7 +48,7 @@ except Exception as e:
 
     # Verificar si el módulo aparece en la lista de módulos disponibles
     echo "Verificando disponibilidad en Odoo..." >> $LOG_FILE
-    docker exec ofitec-odoo python -c "
+    docker exec ofitecai-odoo-1 python -c "
 import odoo
 from odoo.modules.registry import Registry
 from odoo.tools import config
@@ -71,7 +71,7 @@ except Exception as e:
 }
 
 # Lista de módulos que existen realmente
-modulos_existentes=("ofitec_core" "ofitec_security" "ofitec_ai_advanced" "ofitec_whatsapp" "ofitec_project" "ofitec_qhse" "ofitec_visual" "ofitec_optimizer")
+modulos_existentes=("ofitec_core" "ofitec_security" "ofitec_ai_advanced" "ofitec_whatsapp" "ofitec_project" "ofitec_qhse" "ofitec_visual" "ofitec_optimizer" "ofitec_capacity" "ofitec_deployment" "ofitec_backup")
 
 for modulo in "${modulos_existentes[@]}"; do
     test_module_in_docker "$modulo"
@@ -79,7 +79,7 @@ done
 
 # Verificar estado general del sistema Odoo
 echo "=== Estado General del Sistema Odoo ===" >> $LOG_FILE
-docker exec ofitec-odoo python -c "
+docker exec ofitecai-odoo-1 python -c "
 import odoo
 from odoo import api, SUPERUSER_ID
 from odoo.tools import config
@@ -96,7 +96,7 @@ except Exception as e:
 
 # Verificar módulos instalados
 echo "=== Módulos OFITEC Instalados ===" >> $LOG_FILE
-docker exec ofitec-odoo python -c "
+docker exec ofitecai-odoo-1 python -c "
 from odoo.modules.registry import Registry
 from odoo.tools import config
 import logging
