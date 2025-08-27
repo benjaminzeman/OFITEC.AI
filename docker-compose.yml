@@ -27,7 +27,7 @@ services:
       - ./custom_addons:/mnt/extra-addons
       - odoo_data:/var/lib/odoo
     restart: unless-stopped
-    command: ["odoo", "-i", "base,web,bus,mail,project,account", "--addons-path=/usr/lib/python3/dist-packages/odoo/addons", "--db_host=db", "--db_user=odoo", "--db_password=odoo", "-d", "ofitec"]
+    command: ["odoo", "-i", "base,web,bus,mail,project,account", "--addons-path=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons", "--db_host=db", "--db_user=odoo", "--db_password=odoo", "-d", "ofitec"]
 
 volumes:
   db_data:

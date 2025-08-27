@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_command_palette_user,ofitec.command.palette.user,model_ofitec_command_palette,base.group_user,1,0,0,0
-access_command_palette_manager,ofitec.command.palette.manager,model_ofitec_command_palette,ofitec_security.group_supervisor,1,1,1,0
-access_command_palette_admin,ofitec.command.palette.admin,model_ofitec_command_palette,base.group_system,1,1,1,1
+access_command_palette_user,ofitec.command.palette.user,ir.model_ofitec_command_palette,base.group_user,1,0,0,0
+access_command_palette_manager,ofitec.command.palette.manager,ir.model_ofitec_command_palette,base.group_system,1,1,1,0
+access_command_palette_admin,ofitec.command.palette.admin,ir.model_ofitec_command_palette,base.group_system,1,1,1,1

@@ -5,7 +5,7 @@ class OfitecSecurity(models.Model):
     _description = 'Configuración de Seguridad Avanzada'
 
     name = fields.Char(string='Nombre de la Regla', required=True)
-    model_id = fields.Many2one('ir.model', string='Modelo', required=True)
+    model_id = fields.Many2one('ir.model', string='Modelo', required=True, ondelete='cascade')
     group_ids = fields.Many2many('res.groups', string='Grupos Permitidos')
     domain = fields.Char(string='Dominio de Filtro', help='Dominio adicional para restringir acceso')
     active = fields.Boolean(default=True, string='Activo')
