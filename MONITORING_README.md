@@ -24,17 +24,21 @@ Este sistema permite monitorear automáticamente el proyecto OFITEC.AI mientras 
 ```bash
 ./setup_monitoring.sh
 ```
+- Se ejecuta **cada 4 horas automáticamente** en background
+- Funciona en entornos Docker sin necesidad de cron
+- Revisa todo el sistema sin intervención
+- Genera logs detallados de cualquier problema
 
-### Opción 2: Configuración Manual
+### Opción 2: Control Manual del Servicio
 ```bash
-# Hacer ejecutables los scripts
-chmod +x monitor_system.sh
-chmod +x test_module_install.sh
+# Ver estado del monitoreo
+./monitoring_service.sh status
 
-# Configurar cron job (cada 4 horas)
-crontab -e
-# Agregar esta línea:
-# 0 */4 * * * cd /workspaces/OFITEC.AI && ./monitor_system.sh
+# Detener el monitoreo
+./stop_monitoring.sh
+
+# Reiniciar el monitoreo
+./monitoring_service.sh restart
 ```
 
 ## 📊 Archivos de Log Generados
@@ -42,6 +46,7 @@ crontab -e
 - **`monitoring.log`**: Log principal con estado del sistema
 - **`errors.log`**: Solo errores críticos encontrados
 - **`module_install_test.log`**: Resultados detallados de pruebas de módulos
+- **`monitoring_service.log`**: Log del servicio de monitoreo automático
 
 ## 🔧 Ejecutar Monitoreo Manual
 
@@ -104,38 +109,44 @@ Puedes integrar webhooks para enviar notificaciones automáticas.
 - `ofitec_deployment`
 - `ofitec_backup`
 
-## 📝 Ejemplo de Output
+## 📝 Ejemplo de Output Real
 
 ```
-==========================================
-Iniciando monitoreo del sistema OFITEC.AI
 === Estado de Docker Containers ===
-NAMES               STATUS              PORTS
-ofitec-odoo         Up 2 hours          0.0.0.0:8069->8069/tcp
-ofitec-postgres     Up 2 hours          5432/tcp
+ofitecai-odoo-1     Up 11 minutes   0.0.0.0:8069->8069/tcp
+ofitecai-db-1       Up 57 minutes   0.0.0.0:5432->5432/tcp
+
+=== Verificación de sintaxis CSV/XML ===
+✓ custom_addons/ofitec_security/security/ir.model.access.csv: Sintaxis CSV correcta
+✗ custom_addons/ofitec_ai_advanced/static/src/xml/ai_dashboard.xml: Error XML - mismatched tag
 
 === Ejecutando prueba detallada de módulos ===
-=== Probando instalación de ofitec_core ===
-✓ ofitec_core: Importación exitosa
-✓ Prueba de ofitec_core completada
-
-✅ Todos los módulos pasaron las pruebas básicas
-==========================================
+✗ ofitec_core: Error de importación - No module named 'odoo'
+⚠ ADVERTENCIA: Encontrada referencia 'model_ofitec_core'
 ```
 
 ## 🚨 Solución de Problemas Comunes
 
-### "Error de importación"
-- Verificar dependencias en `__manifest__.py`
-- Revisar sintaxis en `__init__.py`
+### "Permission denied"
+```bash
+chmod +x *.sh
+```
 
-### "Error CSV/XML"
-- Verificar formato de archivos
-- Revisar caracteres especiales o encoding
+### "No module named 'odoo'"
+- El módulo debe probarse dentro del contenedor Docker
+- Usar `./test_docker_modules.sh` para pruebas reales
+
+### "Error XML"
+- Revisar la línea específica mencionada en el error
+- Verificar tags de apertura y cierre
 
 ### "External ID no encontrado"
 - Cambiar `model_ofitec_core` por `ir.model_ofitec_core`
 - Verificar que el módulo base esté instalado
+
+### "crontab: command not found"
+- El sistema usa un servicio en background en lugar de cron
+- Usar `./monitoring_service.sh` para controlar el monitoreo
 
 ---
 
