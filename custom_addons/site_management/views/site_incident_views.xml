@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de lista para SiteIncident -->
+        <record id="view_site_incident_tree" model="ir.ui.view">
+            <field name="name">ofitec.site.incident.tree</field>
+            <field name="model">ofitec.site.incident</field>
+            <field name="arch" type="xml">
+                <tree string="Incidencias de Obra" decoration-danger="severity == 'critical'" decoration-warning="severity == 'high'" decoration-info="status == 'resolved'">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="incident_type"/>
+                    <field name="severity"/>
+                    <field name="status"/>
+                    <field name="responsible_id"/>
+                    <field name="date_occurred"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de formulario para SiteIncident -->
+        <record id="view_site_incident_form" model="ir.ui.view">
+            <field name="name">ofitec.site.incident.form</field>
+            <field name="model">ofitec.site.incident</field>
+            <field name="arch" type="xml">
+                <form string="Incidencia de Obra">
+                    <header>
+                        <button name="action_start_investigation" string="Iniciar Investigación" type="object" states="reported" class="btn-primary"/>
+                        <button name="action_assign_responsible" string="Asignar Responsable" type="object" states="reported,investigating" class="btn-warning"/>
+                        <button name="action_resolve_incident" string="Resolver Incidencia" type="object" states="investigating" class="btn-success"/>
+                        <button name="action_close_incident" string="Cerrar Incidencia" type="object" states="resolved" class="btn-info"/>
+                        <button name="action_escalate_incident" string="Escalar Incidencia" type="object" states="reported,investigating" class="btn-danger"/>
+                        <field name="status" widget="statusbar" statusbar_visible="reported,investigating,resolved,closed,escalated"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Descripción breve de la incidencia"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="project_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="daily_report_id" readonly="1"/>
+                                <field name="incident_type"/>
+                                <field name="severity"/>
+                            </group>
+                            <group>
+                                <field name="date_occurred"/>
+                                <field name="date_reported" readonly="1"/>
+                                <field name="responsible_id"/>
+                                <field name="escalation_level"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Descripción de la Incidencia">
+                                <field name="description" widget="html"/>
+                                <field name="immediate_actions" widget="html"/>
+                                <field name="affected_parties" widget="html"/>
+                            </page>
+                            <page string="Investigación">
+                                <field name="root_cause" widget="html"/>
+                                <field name="investigation_notes" widget="html"/>
+                                <field name="corrective_actions" widget="html"/>
+                            </page>
+                            <page string="Resolución">
+                                <field name="resolution" widget="html"/>
+                                <field name="preventive_measures" widget="html"/>
+                                <field name="lessons_learned" widget="html"/>
+                            </page>
+                            <page string="Evidencias">
+                                <field name="photos" widget="many2many_binary"/>
+                                <field name="documents" widget="many2many_binary"/>
+                            </page>
+                            <page string="Seguimiento">
+                                <group>
+                                    <field name="resolution_date" readonly="1"/>
+                                    <field name="closure_date" readonly="1"/>
+                                    <field name="follow_up_required"/>
+                                    <field name="follow_up_date"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="user_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de tablero (dashboard) -->
+        <record id="view_incident_dashboard" model="ir.ui.view">
+            <field name="name">ofitec.site.incident.dashboard</field>
+            <field name="model">ofitec.site.incident</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard de Incidencias" create="false" edit="false">
+                    <sheet>
+                        <div class="oe_dashboard">
+                            <div class="oe_dashboard_main">
+                                <div class="oe_dashboard_column">
+                                    <div class="oe_dashboard_section">
+                                        <h3>Resumen de Incidencias</h3>
+                                        <div class="oe_dashboard_kanban">
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Incidencias Críticas</h4>
+                                                    <div class="oe_value">
+                                                        <field name="severity" domain="[('severity', '=', 'critical')]" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Incidencias Altas</h4>
+                                                    <div class="oe_value">
+                                                        <field name="severity" domain="[('severity', '=', 'high')]" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Resueltas</h4>
+                                                    <div class="oe_value">
+                                                        <field name="status" domain="[('status', '=', 'resolved')]" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_site_incident" model="ir.actions.act_window">
+            <field name="name">Incidencias de Obra</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.site.incident</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Acción de dashboard -->
+        <record id="action_incident_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard de Incidencias</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.site.incident</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_incident_dashboard"/>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_site_incidents" name="Incidencias" parent="menu_site_management_root" action="action_site_incident"/>
+        <menuitem id="menu_incident_dashboard" name="Dashboard de Incidencias" parent="menu_site_management_root" action="action_incident_dashboard"/>
+    </data>
+</odoo>

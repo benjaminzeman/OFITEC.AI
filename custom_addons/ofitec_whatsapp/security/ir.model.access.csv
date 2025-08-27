@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_whatsapp_config_user,ofitec.whatsapp.config.user,model_ofitec_whatsapp_config,base.group_user,1,0,0,0
+access_whatsapp_config_manager,ofitec.whatsapp.config.manager,model_ofitec_whatsapp_config,ofitec_security.group_supervisor,1,1,1,0
+access_whatsapp_config_admin,ofitec.whatsapp.config.admin,model_ofitec_whatsapp_config,base.group_system,1,1,1,1
+access_whatsapp_message_user,ofitec.whatsapp.message.user,model_ofitec_whatsapp_message,base.group_user,1,0,0,0
+access_whatsapp_message_manager,ofitec.whatsapp.message.manager,model_ofitec_whatsapp_message,ofitec_security.group_supervisor,1,1,1,0
+access_whatsapp_message_admin,ofitec.whatsapp.message.admin,model_ofitec_whatsapp_message,base.group_system,1,1,1,1

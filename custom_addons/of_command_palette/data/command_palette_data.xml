@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Comandos predefinidos del Command Palette -->
+
+        <!-- Comando: Estado del Proyecto -->
+        <record id="command_project_status" model="ofitec.command.palette">
+            <field name="name">Estado del Proyecto</field>
+            <field name="command_type">query</field>
+            <field name="description">Obtener el estado actual de un proyecto específico o resumen general</field>
+            <field name="keywords">estado,status,progreso,avance,proyecto</field>
+            <field name="ai_enabled">true</field>
+            <field name="requires_context">false</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Análisis de Riesgos -->
+        <record id="command_risk_analysis" model="ofitec.command.palette">
+            <field name="name">Análisis de Riesgos</field>
+            <field name="command_type">analysis</field>
+            <field name="description">Analizar riesgos del proyecto con IA integrada</field>
+            <field name="keywords">riesgo,risk,analizar,peligro,amenaza</field>
+            <field name="ai_enabled">true</field>
+            <field name="requires_context">false</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Resumen de Costos -->
+        <record id="command_cost_summary" model="ofitec.command.palette">
+            <field name="name">Resumen de Costos</field>
+            <field name="command_type">query</field>
+            <field name="description">Obtener resumen financiero del proyecto</field>
+            <field name="keywords">costo,cost,presupuesto,budget,gasto,finanzas</field>
+            <field name="ai_enabled">true</field>
+            <field name="requires_context">false</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Crear Reporte Diario -->
+        <record id="command_create_report" model="ofitec.command.palette">
+            <field name="name">Crear Reporte Diario</field>
+            <field name="command_type">automation</field>
+            <field name="description">Crear un nuevo reporte diario de obra</field>
+            <field name="keywords">reporte,report,diario,crear,nuevo</field>
+            <field name="ai_enabled">true</field>
+            <field name="requires_context">true</field>
+            <field name="context_fields">project_id,progress,description</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Predecir Costos -->
+        <record id="command_predict_costs" model="ofitec.command.palette">
+            <field name="name">Predecir Costos</field>
+            <field name="command_type">prediction</field>
+            <field name="description">Predecir costos futuros usando IA</field>
+            <field name="keywords">predecir,predict,futuro,estimar,costos</field>
+            <field name="ai_enabled">true</field>
+            <field name="requires_context">true</field>
+            <field name="context_fields">project_id</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Ayuda -->
+        <record id="command_help" model="ofitec.command.palette">
+            <field name="name">Ayuda</field>
+            <field name="command_type">action</field>
+            <field name="description">Mostrar ayuda y comandos disponibles</field>
+            <field name="keywords">ayuda,help,comandos,disponible</field>
+            <field name="ai_enabled">false</field>
+            <field name="requires_context">false</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Dashboard Ejecutivo -->
+        <record id="command_executive_dashboard" model="ofitec.command.palette">
+            <field name="name">Dashboard Ejecutivo</field>
+            <field name="command_type">action</field>
+            <field name="description">Abrir el dashboard ejecutivo con métricas en tiempo real</field>
+            <field name="keywords">dashboard,ejecutivo,resumen,metricas</field>
+            <field name="ai_enabled">false</field>
+            <field name="requires_context">false</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Incidentes Activos -->
+        <record id="command_active_incidents" model="ofitec.command.palette">
+            <field name="name">Incidentes Activos</field>
+            <field name="command_type">query</field>
+            <field name="description">Mostrar incidentes activos que requieren atención</field>
+            <field name="keywords">incidente,activo,problema,urgente</field>
+            <field name="ai_enabled">true</field>
+            <field name="requires_context">false</field>
+            <field name="is_active">true</field>
+        </record>
+
+        <!-- Comando: Próximas Tareas -->
+        <record id="command_next_actions" model="ofitec.command.palette">
+            <field name="name">Próximas Tareas</field>
+            <field name="command_type">analysis</field>
+            <field name="description">Analizar y recomendar próximas acciones inteligentes</field>
+            <field name="keywords">proximo,tarea,accion,recomendar,siguiente</field>
+            <field name="ai_enabled">true</field>
+            <field name="requires_context">false</field>
+            <field name="is_active">true</field>
+        </record>
+    </data>
+</odoo>

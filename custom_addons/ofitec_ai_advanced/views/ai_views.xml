@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- AI Analytics Tree View -->
+        <record id="view_ai_analytics_tree" model="ir.ui.view">
+            <field name="name">AI Analytics Tree</field>
+            <field name="model">ofitec.ai.analytics</field>
+            <field name="arch" type="xml">
+                <tree string="AI Models" decoration-success="is_trained" decoration-warning="not is_trained">
+                    <field name="model_name"/>
+                    <field name="model_type"/>
+                    <field name="algorithm"/>
+                    <field name="is_trained"/>
+                    <field name="accuracy_score" widget="percentage"/>
+                    <field name="training_date"/>
+                    <field name="is_active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- AI Analytics Form View -->
+        <record id="view_ai_analytics_form" model="ir.ui.view">
+            <field name="name">AI Analytics Form</field>
+            <field name="model">ofitec.ai.analytics</field>
+            <field name="arch" type="xml">
+                <form string="AI Analytics">
+                    <sheet>
+                        <group>
+                            <group string="Model Configuration">
+                                <field name="model_name"/>
+                                <field name="model_type"/>
+                                <field name="algorithm"/>
+                                <field name="is_active" widget="boolean_toggle"/>
+                            </group>
+                            <group string="Training Status">
+                                <field name="is_trained" widget="boolean_toggle"/>
+                                <field name="training_date"/>
+                                <field name="accuracy_score" widget="percentage"/>
+                                <field name="mae_score"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Training Configuration">
+                                <field name="training_data_size"/>
+                                <field name="test_size"/>
+                                <field name="random_state"/>
+                            </group>
+                            <group string="Performance">
+                                <field name="training_time"/>
+                                <field name="prediction_time"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="model_parameters"/>
+                            <field name="data_sources" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- AI Analytics Action -->
+        <record id="action_ai_analytics" model="ir.actions.act_window">
+            <field name="name">AI Analytics</field>
+            <field name="res_model">ofitec.ai.analytics</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_ai_analytics_tree"/>
+        </record>
+
+        <!-- AI Analytics Menu -->
+        <menuitem id="menu_ai_analytics" name="AI Analytics" action="action_ai_analytics" parent="project.menu_project_config" sequence="10"/>
+    </data>
+</odoo>

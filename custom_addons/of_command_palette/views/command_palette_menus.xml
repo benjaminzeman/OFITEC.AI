@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menú Principal del Command Palette -->
+        <menuitem id="menu_command_palette_root" name="Command Palette" sequence="5" action="action_command_palette"/>
+
+        <!-- Submenús -->
+        <menuitem id="menu_command_palette_admin" name="Administrar Comandos" parent="menu_command_palette_root" action="action_command_palette_admin" sequence="10"/>
+    </data>
+</odoo>

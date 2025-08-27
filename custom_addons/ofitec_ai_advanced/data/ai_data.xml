@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- AI User Group -->
+        <record id="group_ai_user" model="res.groups">
+            <field name="name">AI User</field>
+            <field name="comment">Users with access to AI analytics and predictions</field>
+        </record>
+
+        <!-- Sample AI Model Data -->
+        <record id="sample_cost_prediction_model" model="ofitec.ai.analytics">
+            <field name="model_name">Cost Prediction Model</field>
+            <field name="model_type">cost_prediction</field>
+            <field name="algorithm">xgboost</field>
+            <field name="is_active">true</field>
+            <field name="training_data_size">1000</field>
+            <field name="test_size">0.2</field>
+            <field name="random_state">42</field>
+            <field name="model_parameters">{"n_estimators": 100, "max_depth": 10}</field>
+        </record>
+    </data>
+</odoo>

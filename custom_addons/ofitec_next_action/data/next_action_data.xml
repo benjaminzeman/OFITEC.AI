@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Acciones de ejemplo para demostrar el sistema -->
+
+        <!-- Acción crítica de ejemplo -->
+        <record id="next_action_example_critical" model="ofitec.next.action">
+            <field name="name">Revisar riesgo crítico de seguridad identificado</field>
+            <field name="description">Se ha identificado un riesgo crítico de seguridad en el proyecto principal. Requiere atención inmediata del equipo de seguridad y el gerente de proyecto.</field>
+            <field name="action_type">immediate</field>
+            <field name="priority">1</field>
+            <field name="category">risk</field>
+            <field name="status">pending</field>
+            <field name="confidence_score">95.0</field>
+            <field name="impact_score">9.5</field>
+            <field name="urgency_score">10.0</field>
+            <field name="recommended_actions">1. Realizar inspección de seguridad inmediata
+2. Implementar medidas preventivas
+3. Actualizar plan de seguridad del proyecto
+4. Comunicar hallazgos al equipo</field>
+            <field name="expected_benefits">Reducción significativa de riesgos de seguridad y cumplimiento normativo</field>
+            <field name="required_resources">Equipo de seguridad, gerente de proyecto, inspector de obra</field>
+            <field name="deadline">2025-08-30</field>
+            <field name="ai_model_used">Risk Analysis Engine v2.0</field>
+            <field name="created_by_ai">true</field>
+        </record>
+
+        <!-- Acción financiera de ejemplo -->
+        <record id="next_action_example_financial" model="ofitec.next.action">
+            <field name="name">Analizar varianza presupuestaria del 18%</field>
+            <field name="description">El proyecto presenta una varianza presupuestaria del 18% por encima del planificado. Se requiere análisis detallado de costos.</field>
+            <field name="action_type">urgent</field>
+            <field name="priority">2</field>
+            <field name="category">financial</field>
+            <field name="status">pending</field>
+            <field name="confidence_score">88.0</field>
+            <field name="impact_score">7.5</field>
+            <field name="urgency_score">8.0</field>
+            <field name="recommended_actions">1. Revisar detalle de costos por actividad
+2. Identificar causas de la varianza
+3. Proponer medidas correctivas
+4. Actualizar presupuesto si es necesario</field>
+            <field name="expected_benefits">Mejor control financiero y prevención de desviaciones mayores</field>
+            <field name="required_resources">Equipo financiero, datos de costos actualizados</field>
+            <field name="deadline">2025-09-05</field>
+            <field name="ai_model_used">Financial Analysis Engine v1.5</field>
+            <field name="created_by_ai">true</field>
+        </record>
+
+        <!-- Acción operativa de ejemplo -->
+        <record id="next_action_example_operational" model="ofitec.next.action">
+            <field name="name">Actualizar reportes diarios pendientes</field>
+            <field name="description">Hay 3 reportes diarios pendientes de aprobación. Es importante mantener el flujo de información actualizado.</field>
+            <field name="action_type">planned</field>
+            <field name="priority">3</field>
+            <field name="category">communication</field>
+            <field name="status">pending</field>
+            <field name="confidence_score">75.0</field>
+            <field name="impact_score">5.0</field>
+            <field name="urgency_score">6.0</field>
+            <field name="recommended_actions">1. Revisar reportes pendientes en el sistema
+2. Aprobar o solicitar correcciones según sea necesario
+3. Comunicar feedback al equipo de obra</field>
+            <field name="expected_benefits">Mejora en la comunicación y seguimiento del proyecto</field>
+            <field name="required_resources">Supervisor de obra o gerente de proyecto</field>
+            <field name="deadline">2025-08-28</field>
+            <field name="ai_model_used">Communication Analysis Engine v1.0</field>
+            <field name="created_by_ai">true</field>
+        </record>
+
+        <!-- Acción preventiva de ejemplo -->
+        <record id="next_action_example_preventive" model="ofitec.next.action">
+            <field name="name">Implementar plan de mantenimiento preventivo</field>
+            <field name="description">Basado en análisis de incidentes recurrentes, se recomienda implementar un plan de mantenimiento preventivo para equipos críticos.</field>
+            <field name="action_type">preventive</field>
+            <field name="priority">3</field>
+            <field name="category">quality</field>
+            <field name="status">pending</field>
+            <field name="confidence_score">82.0</field>
+            <field name="impact_score">6.5</field>
+            <field name="urgency_score">4.0</field>
+            <field name="recommended_actions">1. Identificar equipos críticos
+2. Definir programa de mantenimiento
+3. Asignar responsabilidades
+4. Establecer indicadores de seguimiento</field>
+            <field name="expected_benefits">Reducción de incidentes y mejora en la disponibilidad de equipos</field>
+            <field name="required_resources">Equipo de mantenimiento, supervisor técnico</field>
+            <field name="deadline">2025-09-15</field>
+            <field name="ai_model_used">Predictive Maintenance Engine v1.0</field>
+            <field name="created_by_ai">true</field>
+        </record>
+    </data>
+</odoo>

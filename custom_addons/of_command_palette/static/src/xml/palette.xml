@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="of_command_palette.CommandPalette" owl="1">
+        <div t-if="state.showPalette" class="command-palette-overlay">
+            <div class="command-palette">
+                <div class="command-palette-header">
+                    <h3 class="command-palette-title">💬 Command Palette Inteligente</h3>
+                    <p class="command-palette-subtitle">Escribe comandos naturales o presiona Ctrl+K</p>
+                </div>
+
+                <div class="command-input-section">
+                    <div class="command-input-group">
+                        <input type="text"
+                               t-model="state.query"
+                               t-on-input="onInput"
+                               placeholder="Ej: 'estado del proyecto', 'analizar riesgos', 'crear reporte diario'..."
+                               class="command-input"
+                               autofocus="true"/>
+                        <button type="button"
+                                t-on-click="() => executeCommand()"
+                                t-att-disabled="state.isLoading"
+                                class="btn-execute">
+                            <t t-if="state.isLoading">
+                                <span class="loading-spinner"></span>
+                            </t>
+                            <t t-else="">
+                                <i class="fa fa-play"></i> Ejecutar
+                            </t>
+                        </button>
+                    </div>
+
+                    <div t-if="state.suggestions.length" class="command-suggestions">
+                        <h5>Sugerencias Rápidas:</h5>
+                        <div class="suggestion-tags">
+                            <t t-foreach="state.suggestions" t-as="suggestion" t-key="suggestion.name">
+                                <span t-att-data-command="suggestion.name"
+                                      t-on-click="() => selectSuggestion(suggestion)"
+                                      class="suggestion-tag">
+                                    <t t-esc="suggestion.name"/>
+                                </span>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-results-section">
+                    <h4>Resultado:</h4>
+                    <div id="commandResult" class="command-result">
+                        <div class="no-result">
+                            <i class="fa fa-magic"></i>
+                            <p>Escribe un comando para ver los resultados aquí</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div t-if="state.commandHistory.length" class="command-history-section">
+                    <h4>Historial Reciente:</h4>
+                    <t t-foreach="state.commandHistory.slice(0, 3)" t-as="item" t-key="item.timestamp">
+                        <div class="command-history-item">
+                            <strong t-esc="item.command"></strong>
+                            <small> - <t t-esc="new Date(item.timestamp).toLocaleTimeString()"/></small>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

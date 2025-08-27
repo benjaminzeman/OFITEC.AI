@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="ofitec_next_action.NextActionDashboard" owl="1">
+        <div class="ofitec-next-action-dashboard">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">🚀 Next-Best-Action Dashboard</h1>
+                <div class="dashboard-controls">
+                    <button type="button" class="btn btn-ai-analysis" t-on-click="runAIAnalysis">
+                        <i class="fa fa-brain"></i> Análisis IA
+                    </button>
+                    <button type="button" class="btn btn-generate-recs" t-on-click="generateRecommendations">
+                        <i class="fa fa-magic"></i> Generar Recomendaciones
+                    </button>
+                </div>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="metrics-grid">
+                <div class="metric-card metric-critical">
+                    <span class="metric-icon">🚨</span>
+                    <div class="metric-title">Acciones Críticas</div>
+                    <h2 class="metric-value" id="critical-count" t-esc="state.dashboardData.summary.critical">0</h2>
+                </div>
+
+                <div class="metric-card metric-high">
+                    <span class="metric-icon">⚡</span>
+                    <div class="metric-title">Prioridad Alta</div>
+                    <h2 class="metric-value" id="high-count" t-esc="state.dashboardData.summary.high">0</h2>
+                </div>
+
+                <div class="metric-card metric-pending">
+                    <span class="metric-icon">⏳</span>
+                    <div class="metric-title">Pendientes</div>
+                    <h2 class="metric-value" id="pending-count" t-esc="state.dashboardData.summary.pending">0</h2>
+                </div>
+
+                <div class="metric-card metric-completed">
+                    <span class="metric-icon">✅</span>
+                    <div class="metric-title">Completadas Hoy</div>
+                    <h2 class="metric-value" id="completed-count" t-esc="state.dashboardData.summary.completed_today">0</h2>
+                </div>
+            </div>
+
+            <!-- Urgent Actions Section -->
+            <div class="urgent-actions-section">
+                <h2 class="section-title">Acciones Urgentes</h2>
+                <div class="urgent-actions-list" id="urgent-actions-list">
+                    <t t-if="!state.dashboardData.urgent_actions or state.dashboardData.urgent_actions.length === 0">
+                        <div class="no-actions">🎉 No hay acciones urgentes pendientes</div>
+                    </t>
+                    <t t-foreach="state.dashboardData.urgent_actions" t-as="action" t-key="action.id">
+                        <div class="urgent-action-item" t-att-class="'priority-' + action.priority">
+                            <div class="action-header">
+                                <span class="action-priority">P<t t-esc="action.priority"/></span>
+                                <span class="action-category"><t t-esc="getCategoryIcon(action.category)"/></span>
+                                <span class="action-project" t-esc="action.project"/>
+                            </div>
+                            <div class="action-title" t-esc="action.name"/>
+                            <div class="action-deadline">
+                                📅 <t t-esc="action.deadline or 'Sin fecha límite'"/>
+                            </div>
+                            <div class="action-actions">
+                                <button class="btn btn-sm btn-primary"
+                                        t-on-click="() => window.open('/web#id=' + action.id + '&amp;model=ofitec.next.action&amp;view_type=form', '_blank')">
+                                    Ver Detalles
+                                </button>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+            <!-- Loading Overlay -->
+            <div t-if="state.isLoading" class="loading-overlay">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </t>
+</templates>

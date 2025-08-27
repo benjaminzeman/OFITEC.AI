@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de lista para NextAction -->
+        <record id="view_next_action_tree" model="ir.ui.view">
+            <field name="name">ofitec.next.action.tree</field>
+            <field name="model">ofitec.next.action</field>
+            <field name="arch" type="xml">
+                <tree string="Próximas Acciones Recomendadas" decoration-danger="priority == '1'" decoration-warning="priority == '2'" decoration-info="status == 'completed'">
+                    <field name="name"/>
+                    <field name="action_type"/>
+                    <field name="priority"/>
+                    <field name="category"/>
+                    <field name="project_id"/>
+                    <field name="status"/>
+                    <field name="deadline"/>
+                    <field name="confidence_score" widget="percentage"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de formulario para NextAction -->
+        <record id="view_next_action_form" model="ir.ui.view">
+            <field name="name">ofitec.next.action.form</field>
+            <field name="model">ofitec.next.action</field>
+            <field name="arch" type="xml">
+                <form string="Próxima Acción Recomendada">
+                    <header>
+                        <button name="action_start_progress" string="Iniciar" type="object" states="pending" class="btn-primary"/>
+                        <button name="action_mark_completed" string="Completar" type="object" states="pending,in_progress" class="btn-success"/>
+                        <button name="action_cancel" string="Cancelar" type="object" states="pending,in_progress" class="btn-danger"/>
+                        <field name="status" widget="statusbar" statusbar_visible="pending,in_progress,completed,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Título de la acción recomendada"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="action_type"/>
+                                <field name="priority"/>
+                                <field name="category"/>
+                                <field name="project_id" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="suggested_date" readonly="1"/>
+                                <field name="deadline"/>
+                                <field name="completed_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Descripción y Análisis IA">
+                            <field name="description" widget="html"/>
+                        </group>
+                        <group string="Puntuaciones de IA">
+                            <field name="confidence_score" readonly="1" widget="percentage"/>
+                            <field name="impact_score" readonly="1"/>
+                            <field name="urgency_score" readonly="1"/>
+                            <field name="ai_model_used" readonly="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Acciones Recomendadas">
+                                <field name="recommended_actions" widget="html"/>
+                            </page>
+                            <page string="Beneficios Esperados">
+                                <field name="expected_benefits" widget="html"/>
+                            </page>
+                            <page string="Recursos Requeridos">
+                                <field name="required_resources" widget="html"/>
+                            </page>
+                            <page string="Relaciones">
+                                <group>
+                                    <field name="risk_id" readonly="1"/>
+                                    <field name="incident_id" readonly="1"/>
+                                    <field name="budget_id" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista del Dashboard de Próximas Acciones -->
+        <record id="view_next_action_dashboard" model="ir.ui.view">
+            <field name="name">ofitec.next.action.dashboard</field>
+            <field name="model">ofitec.next.action</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard de Próximas Acciones" create="false" edit="false">
+                    <sheet>
+                        <div class="next-action-dashboard">
+                            <!-- KPIs Principales -->
+                            <div class="dashboard-header">
+                                <h2>🎯 Próximas Acciones Inteligentes</h2>
+                                <div class="dashboard-actions">
+                                    <button name="run_ai_analysis" string="🔄 Ejecutar Análisis IA" type="object" class="btn btn-primary"/>
+                                    <button name="generate_next_actions" string="⚡ Generar Recomendaciones" type="object" class="btn btn-success"/>
+                                </div>
+                            </div>
+
+                            <!-- Métricas Rápidas -->
+                            <div class="metrics-grid">
+                                <div class="metric-card critical">
+                                    <div class="metric-icon">🚨</div>
+                                    <div class="metric-content">
+                                        <div class="metric-value" id="critical-count">-</div>
+                                        <div class="metric-label">Acciones Críticas</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card high">
+                                    <div class="metric-icon">⚠️</div>
+                                    <div class="metric-content">
+                                        <div class="metric-value" id="high-count">-</div>
+                                        <div class="metric-label">Acciones Altas</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card pending">
+                                    <div class="metric-icon">⏳</div>
+                                    <div class="metric-content">
+                                        <div class="metric-value" id="pending-count">-</div>
+                                        <div class="metric-label">Pendientes</div>
+                                    </div>
+                                </div>
+                                <div class="metric-card completed">
+                                    <div class="metric-icon">✅</div>
+                                    <div class="metric-content">
+                                        <div class="metric-value" id="completed-count">-</div>
+                                        <div class="metric-label">Completadas Hoy</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lista de Acciones Urgentes -->
+                            <div class="urgent-actions-section">
+                                <h3>🔥 Acciones Urgentes (Prioridad 1-2)</h3>
+                                <div id="urgent-actions-list" class="actions-list">
+                                    <!-- Las acciones urgentes se cargarán dinámicamente -->
+                                </div>
+                            </div>
+
+                            <!-- Análisis por Categoría -->
+                            <div class="category-analysis-section">
+                                <h3>📊 Análisis por Categoría</h3>
+                                <div class="category-grid">
+                                    <div class="category-card">
+                                        <h4>🎯 Riesgos</h4>
+                                        <div class="category-stats" id="risk-stats">-</div>
+                                    </div>
+                                    <div class="category-card">
+                                        <h4>💰 Financiero</h4>
+                                        <div class="category-stats" id="financial-stats">-</div>
+                                    </div>
+                                    <div class="category-card">
+                                        <h4>⚙️ Operacional</h4>
+                                        <div class="category-stats" id="operational-stats">-</div>
+                                    </div>
+                                    <div class="category-card">
+                                        <h4>📱 Comunicación</h4>
+                                        <div class="category-stats" id="communication-stats">-</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Próximas Mejores Acciones -->
+                            <div class="next-best-actions-section">
+                                <h3>🚀 Próximas Mejores Acciones</h3>
+                                <div id="next-best-actions" class="best-actions-list">
+                                    <!-- Las mejores acciones se cargarán dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_next_action" model="ir.actions.act_window">
+            <field name="name">Próximas Acciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.next.action</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Acción del Dashboard -->
+        <record id="action_next_action_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard de Próximas Acciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.next.action</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_next_action_dashboard"/>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_next_action_root" name="Próximas Acciones" sequence="15" action="action_next_action_dashboard"/>
+        <menuitem id="menu_next_action_list" name="Todas las Acciones" parent="menu_next_action_root" action="action_next_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de lista para RiskRecord -->
+        <record id="view_risk_record_tree" model="ir.ui.view">
+            <field name="name">ofitec.project.risk.tree</field>
+            <field name="model">ofitec.project.risk</field>
+            <field name="arch" type="xml">
+                <tree string="Riesgos de Proyecto" decoration-danger="severity == 'critical'" decoration-warning="severity == 'high'" decoration-info="status == 'mitigated'">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="risk_category"/>
+                    <field name="severity"/>
+                    <field name="probability"/>
+                    <field name="risk_exposure"/>
+                    <field name="responsible_id"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de formulario para RiskRecord -->
+        <record id="view_risk_record_form" model="ir.ui.view">
+            <field name="name">ofitec.project.risk.form</field>
+            <field name="model">ofitec.project.risk</field>
+            <field name="arch" type="xml">
+                <form string="Riesgo de Proyecto">
+                    <header>
+                        <button name="action_start_analysis" string="Iniciar Análisis" type="object" states="identified" class="btn-primary"/>
+                        <button name="action_start_mitigation" string="Iniciar Mitigación" type="object" states="analyzing" class="btn-warning"/>
+                        <button name="action_complete_mitigation" string="Completar Mitigación" type="object" states="mitigating" class="btn-success"/>
+                        <button name="action_close_risk" string="Cerrar Riesgo" type="object" states="mitigated" class="btn-info"/>
+                        <button name="action_risk_occurred" string="Riesgo Ocurrido" type="object" states="identified,analyzing,mitigating,mitigated" class="btn-danger"/>
+                        <field name="status" widget="statusbar" statusbar_visible="identified,analyzing,mitigating,mitigated,closed,occurred"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre del riesgo"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="project_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="incident_id" readonly="1"/>
+                                <field name="risk_category"/>
+                                <field name="identification_date" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="severity"/>
+                                <field name="probability"/>
+                                <field name="responsible_id"/>
+                                <field name="deadline"/>
+                            </group>
+                        </group>
+                        <group string="Evaluación Cuantitativa">
+                            <field name="probability_value" readonly="1"/>
+                            <field name="impact_value"/>
+                            <field name="currency_id" readonly="1"/>
+                            <field name="risk_exposure" readonly="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Descripción del Riesgo">
+                                <field name="description" widget="html"/>
+                                <field name="causes" widget="html"/>
+                                <field name="consequences" widget="html"/>
+                            </page>
+                            <page string="Gestión del Riesgo">
+                                <field name="mitigation_plan" widget="html"/>
+                                <field name="contingency_plan" widget="html"/>
+                            </page>
+                            <page string="Seguimiento">
+                                <group>
+                                    <field name="mitigation_start_date" readonly="1"/>
+                                    <field name="mitigation_end_date" readonly="1"/>
+                                    <field name="actual_occurrence_date" readonly="1"/>
+                                    <field name="mitigation_progress" widget="percentage"/>
+                                    <field name="effectiveness_rating"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="user_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de tablero (dashboard) -->
+        <record id="view_risk_dashboard" model="ir.ui.view">
+            <field name="name">ofitec.project.risk.dashboard</field>
+            <field name="model">ofitec.project.risk</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard de Riesgos" create="false" edit="false">
+                    <sheet>
+                        <div class="oe_dashboard">
+                            <div class="oe_dashboard_main">
+                                <div class="oe_dashboard_column">
+                                    <div class="oe_dashboard_section">
+                                        <h3>Resumen de Riesgos</h3>
+                                        <div class="oe_dashboard_kanban">
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Riesgos Críticos</h4>
+                                                    <div class="oe_value">
+                                                        <field name="severity" domain="[('severity', '=', 'critical')]" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Riesgos Altos</h4>
+                                                    <div class="oe_value">
+                                                        <field name="severity" domain="[('severity', '=', 'high')]" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Mitigados</h4>
+                                                    <div class="oe_value">
+                                                        <field name="status" domain="[('status', '=', 'mitigated')]" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_risk_record" model="ir.actions.act_window">
+            <field name="name">Riesgos de Proyecto</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.project.risk</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Acción de dashboard -->
+        <record id="action_risk_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard de Riesgos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.project.risk</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_risk_dashboard"/>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_project_risk_root" name="Riesgos de Proyecto" sequence="40"/>
+        <menuitem id="menu_risk_records" name="Registro de Riesgos" parent="menu_project_risk_root" action="action_risk_record"/>
+        <menuitem id="menu_risk_dashboard" name="Dashboard de Riesgos" parent="menu_project_risk_root" action="action_risk_dashboard"/>
+    </data>
+</odoo>

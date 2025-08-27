@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de lista para CommandPalette -->
+        <record id="view_command_palette_tree" model="ir.ui.view">
+            <field name="name">ofitec.command.palette.tree</field>
+            <field name="model">ofitec.command.palette</field>
+            <field name="arch" type="xml">
+                <tree string="Comandos del Palette" decoration-success="is_active == True">
+                    <field name="name"/>
+                    <field name="command_type"/>
+                    <field name="description"/>
+                    <field name="usage_count"/>
+                    <field name="last_used"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de formulario para CommandPalette -->
+        <record id="view_command_palette_form" model="ir.ui.view">
+            <field name="name">ofitec.command.palette.form</field>
+            <field name="model">ofitec.command.palette</field>
+            <field name="arch" type="xml">
+                <form string="Comando del Palette">
+                    <header>
+                        <button name="action_test_command" string="Probar Comando" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre del comando"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="command_type"/>
+                                <field name="keywords"/>
+                                <field name="ai_enabled"/>
+                                <field name="requires_context"/>
+                            </group>
+                            <group>
+                                <field name="usage_count" readonly="1"/>
+                                <field name="last_used" readonly="1"/>
+                                <field name="context_fields"/>
+                            </group>
+                        </group>
+                        <group string="Descripción y Configuración">
+                            <field name="description" widget="html"/>
+                        </group>
+                        <group>
+                            <field name="user_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de Command Palette Interface -->
+        <record id="view_command_palette_interface" model="ir.ui.view">
+            <field name="name">ofitec.command.palette.interface</field>
+            <field name="model">ofitec.command.palette</field>
+            <field name="arch" type="xml">
+                <form string="Command Palette Inteligente" create="false" edit="false">
+                    <sheet>
+                        <div class="command-palette-container">
+                            <div class="command-input-section">
+                                <h3>💬 Command Palette Inteligente</h3>
+                                <p class="text-muted">Escribe comandos naturales o presiona Ctrl+K para activar</p>
+
+                                <div class="command-input-group">
+                                    <input type="text" id="commandInput" class="form-control command-input"
+                                           placeholder="Ej: 'estado del proyecto', 'analizar riesgos', 'crear reporte diario'..."/>
+                                    <button type="button" class="btn btn-primary" id="executeCommand">
+                                        <i class="fa fa-play"></i> Ejecutar
+                                    </button>
+                                </div>
+
+                                <div class="command-suggestions" id="suggestionsContainer">
+                                    <h5>Sugerencias:</h5>
+                                    <div class="suggestion-tags">
+                                        <span class="badge badge-secondary suggestion-tag" data-command="estado del proyecto">📊 Estado Proyecto</span>
+                                        <span class="badge badge-secondary suggestion-tag" data-command="analizar riesgos">🎯 Analizar Riesgos</span>
+                                        <span class="badge badge-secondary suggestion-tag" data-command="resumen costos">💰 Resumen Costos</span>
+                                        <span class="badge badge-secondary suggestion-tag" data-command="crear reporte diario">📝 Crear Reporte</span>
+                                        <span class="badge badge-secondary suggestion-tag" data-command="predecir costos">🔮 Predecir Costos</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="command-results-section">
+                                <h4>Resultado:</h4>
+                                <div id="commandResult" class="command-result">
+                                    <div class="no-result">
+                                        <i class="fa fa-magic"></i>
+                                        <p>Escribe un comando para ver los resultados aquí</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="command-history-section">
+                                <h4>Historial de Comandos:</h4>
+                                <div id="commandHistory" class="command-history">
+                                    <!-- Historial se cargará dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_command_palette" model="ir.actions.act_window">
+            <field name="name">Command Palette</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.command.palette</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_command_palette_interface"/>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Acción de administración -->
+        <record id="action_command_palette_admin" model="ir.actions.act_window">
+            <field name="name">Administrar Comandos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.command.palette</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

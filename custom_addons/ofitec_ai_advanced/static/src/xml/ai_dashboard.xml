@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ofitec_ai_advanced.AIDashboard" owl="1">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">
+                                <i class="fa fa-brain me-2"></i>
+                                Advanced AI Analytics Dashboard
+                            </h4>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                        t-on-click="refreshDashboard">
+                                    <i class="fa fa-refresh"></i> Refresh
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                        t-on-click="exportData">
+                                    <i class="fa fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Real-time Metrics Section -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h5 class="section-title">
+                                        <i class="fa fa-tachometer-alt me-2"></i>
+                                        Real-time Metrics
+                                    </h5>
+                                    <div class="row" t-if="state.realtimeMetrics.length">
+                                        <t t-foreach="state.realtimeMetrics" t-as="metric" t-key="metric.name">
+                                            <div class="col-md-3 mb-3">
+                                                <div class="card metric-card"
+                                                     t-att-class="getMetricCardClass(metric)">
+                                                    <div class="card-body text-center">
+                                                        <div class="metric-icon mb-2">
+                                                            <i t-att-class="getMetricIcon(metric.type)"></i>
+                                                        </div>
+                                                        <h6 class="metric-name" t-esc="metric.name"></h6>
+                                                        <div class="metric-value">
+                                                            <span class="current-value" t-esc="formatValue(metric.current, metric.type)"></span>
+                                                            <t t-if="metric.target">
+                                                                <small class="text-muted">/ <t t-esc="formatValue(metric.target, metric.type)"></t></small>
+                                                            </t>
+                                                        </div>
+                                                        <div class="metric-status mt-2">
+                                                            <span t-att-class="getStatusBadgeClass(metric.status)"
+                                                                  class="badge">
+                                                                <t t-esc="metric.status"/>
+                                                            </span>
+                                                            <t t-if="metric.trend">
+                                                                <i t-att-class="getTrendIcon(metric.trend)" class="ms-2"></i>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div t-else="" class="text-center text-muted">
+                                        <i class="fa fa-spinner fa-spin me-2"></i>
+                                        Loading real-time metrics...
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Predictive Analytics Section -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h5 class="section-title">
+                                        <i class="fa fa-chart-line me-2"></i>
+                                        Predictive Analytics
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h6 class="mb-0">Project Predictions</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div t-if="state.predictiveInsights.length" class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Project</th>
+                                                                    <th>Cost Prediction</th>
+                                                                    <th>Schedule Prediction</th>
+                                                                    <th>Risk Level</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <t t-foreach="state.predictiveInsights" t-as="insight" t-key="insight.project_id">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <strong t-esc="insight.project_name"></strong>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span t-att-class="getPredictionClass(insight.cost_prediction)"
+                                                                                  class="prediction-value">
+                                                                                <t t-esc="formatPercentage(insight.cost_prediction)"/>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span t-att-class="getPredictionClass(insight.schedule_prediction)"
+                                                                                  class="prediction-value">
+                                                                                <t t-esc="formatPercentage(insight.schedule_prediction)"/>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span t-att-class="getRiskBadgeClass(insight.risk_assessment)"
+                                                                                  class="badge">
+                                                                                <t t-esc="getRiskLevelText(insight.risk_assessment)"/>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                                                    t-on-click="() => showProjectDetails(insight)">
+                                                                                <i class="fa fa-eye"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </t>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div t-else="" class="text-center text-muted">
+                                                        <i class="fa fa-spinner fa-spin me-2"></i>
+                                                        Loading predictive insights...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h6 class="mb-0">AI Recommendations</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div t-if="state.selectedProject" class="recommendations-container">
+                                                        <h6 t-esc="state.selectedProject.project_name"></h6>
+                                                        <div class="recommendations-list">
+                                                            <t t-foreach="state.selectedProject.recommendations.split('\n')" t-as="rec" t-key="rec_index">
+                                                                <div class="recommendation-item mb-2">
+                                                                    <i class="fa fa-lightbulb text-warning me-2"></i>
+                                                                    <span t-esc="rec"></span>
+                                                                </div>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                    <div t-else="" class="text-center text-muted">
+                                                        Select a project to view AI recommendations
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ML Models Section -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h5 class="section-title">
+                                        <i class="fa fa-robot me-2"></i>
+                                        Machine Learning Models
+                                    </h5>
+                                    <div class="row">
+                                        <t t-foreach="state.mlModels" t-as="model" t-key="model.id">
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card model-card">
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                                            <h6 class="model-name mb-0" t-esc="model.name"></h6>
+                                                            <span t-att-class="getModelStatusClass(model)"
+                                                                  class="badge">
+                                                                <t t-esc="model.trained ? 'Trained' : 'Not Trained'"/>
+                                                            </span>
+                                                        </div>
+                                                        <div class="model-details">
+                                                            <small class="text-muted d-block">
+                                                                Type: <strong t-esc="model.type"/>
+                                                            </strong></small>
+                                                            <small class="text-muted d-block">
+                                                                Algorithm: <strong t-esc="model.algorithm"/>
+                                                            </strong></small>
+                                                            <t t-if="model.accuracy">
+                                                                <small class="text-muted d-block">
+                                                                    Accuracy: <strong t-esc="formatPercentage(model.accuracy)"/>
+                                                                </strong></small>
+                                                            </t>
+                                                        </div>
+                                                        <div class="model-actions mt-3">
+                                                            <t t-if="!model.trained">
+                                                                <button type="button" class="btn btn-sm btn-primary me-2"
+                                                                        t-on-click="() => trainModel(model.id)">
+                                                                    <i class="fa fa-graduation-cap"></i> Train
+                                                                </button>
+                                                            </t>
+                                                            <button type="button" class="btn btn-sm btn-outline-info"
+                                                                    t-on-click="() => showModelDetails(model)">
+                                                                <i class="fa fa-info-circle"></i> Details
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Charts Section -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="section-title">
+                                        <i class="fa fa-chart-bar me-2"></i>
+                                        Analytics Charts
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h6 class="mb-0">Performance Trends</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="performanceChart" width="400" height="200"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h6 class="mb-0">Risk Distribution</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="riskChart" width="400" height="200"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- Model Details Modal -->
+    <div class="modal fade" id="modelDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Model Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <t t-if="state.selectedModel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Model Information</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Name:</strong></td>
+                                        <td t-esc="state.selectedModel.name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Type:</strong></td>
+                                        <td t-esc="state.selectedModel.type"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Algorithm:</strong></td>
+                                        <td t-esc="state.selectedModel.algorithm"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status:</strong></td>
+                                        <td>
+                                            <span t-att-class="getModelStatusClass(state.selectedModel)"
+                                                  class="badge">
+                                                <t t-esc="state.selectedModel.trained ? 'Trained' : 'Not Trained'"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <t t-if="state.selectedModel.accuracy">
+                                        <tr>
+                                            <td><strong>Accuracy:</strong></td>
+                                            <td t-esc="formatPercentage(state.selectedModel.accuracy)"></td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Feature Importance</h6>
+                                <div t-if="state.modelFeatures" class="feature-importance">
+                                    <t t-foreach="Object.entries(state.modelFeatures)" t-as="feature" t-key="feature[0]">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span t-esc="feature[0]"></span>
+                                            <div class="progress" style="width: 120px;">
+                                                <div class="progress-bar" role="progressbar"
+                                                     t-att-style="'width: ' + (feature[1] * 100) + '%'"
+                                                     t-att-aria-valuenow="feature[1] * 100">
+                                                </div>
+                                            </div>
+                                            <small class="text-muted ms-2" t-esc="formatPercentage(feature[1])"></small>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div t-else="" class="text-muted">
+                                    No feature importance data available
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <t t-if="!state.selectedModel.trained">
+                        <button type="button" class="btn btn-primary"
+                                t-on-click="() => trainModel(state.selectedModel.id)">
+                            Train Model
+                        </button>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </div>
+</templates>

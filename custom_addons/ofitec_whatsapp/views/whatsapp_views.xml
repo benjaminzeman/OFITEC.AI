@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- WhatsApp Configuration Views -->
+        <record id="view_whatsapp_config_form" model="ir.ui.view">
+            <field name="name">ofitec.whatsapp.config.form</field>
+            <field name="model">ofitec.whatsapp.config</field>
+            <field name="arch" type="xml">
+                <form string="WhatsApp Configuration">
+                    <header>
+                        <button name="test_connection" string="Test Connection" type="object" class="btn-primary"/>
+                        <field name="is_active" widget="statusbar" statusbar_visible="active,inactive"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="account_name" placeholder="My WhatsApp Business Account"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="API Configuration">
+                                <field name="phone_number_id" placeholder="123456789012345"/>
+                                <field name="access_token" password="True" placeholder="EAA..."/>
+                                <field name="app_secret" password="True" placeholder="your_app_secret"/>
+                                <field name="api_version"/>
+                                <field name="base_url" readonly="1"/>
+                            </group>
+
+                            <group string="Settings">
+                                <field name="default_language"/>
+                                <field name="test_mode"/>
+                                <field name="webhook_verify_token" placeholder="your_verify_token"/>
+                                <field name="webhook_url" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Statistics" readonly="1">
+                            <field name="messages_sent_today"/>
+                            <field name="messages_received_today"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Message Templates">
+                                <field name="default_language"/>
+                                <p>Use these templates for common messages:</p>
+                                <ul>
+                                    <li><strong>urgent_action:</strong> Notificación de acción urgente</li>
+                                    <li><strong>action_completed:</strong> Confirmación de acción completada</li>
+                                    <li><strong>welcome:</strong> Mensaje de bienvenida</li>
+                                </ul>
+                            </page>
+
+                            <page string="Webhook Logs">
+                                <field name="create_date" readonly="1"/>
+                                <p>Webhook processing logs will appear here.</p>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_whatsapp_config_tree" model="ir.ui.view">
+            <field name="name">ofitec.whatsapp.config.tree</field>
+            <field name="model">ofitec.whatsapp.config</field>
+            <field name="arch" type="xml">
+                <tree string="WhatsApp Configurations" decoration-success="is_active==True">
+                    <field name="account_name"/>
+                    <field name="phone_number_id"/>
+                    <field name="is_active"/>
+                    <field name="messages_sent_today"/>
+                    <field name="messages_received_today"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- WhatsApp Messages Views -->
+        <record id="view_whatsapp_message_form" model="ir.ui.view">
+            <field name="name">ofitec.whatsapp.message.form</field>
+            <field name="model">ofitec.whatsapp.message</field>
+            <field name="arch" type="xml">
+                <form string="WhatsApp Message">
+                    <header>
+                        <button name="retry_send" string="Retry Send" type="object"
+                                states="failed" class="btn-warning"/>
+                        <button name="mark_as_read" string="Mark as Read" type="object"
+                                states="delivered" class="btn-info"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="config_id"/>
+                                <field name="direction"/>
+                                <field name="message_type"/>
+                                <field name="status"/>
+                            </group>
+                            <group>
+                                <field name="from_phone"/>
+                                <field name="to_phone"/>
+                                <field name="whatsapp_message_id" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Content">
+                            <field name="content" widget="html"/>
+                            <field name="media_url"/>
+                            <field name="media_caption"/>
+                        </group>
+
+                        <group string="Related Records">
+                            <field name="next_action_id"/>
+                            <field name="user_id"/>
+                        </group>
+
+                        <group string="Metadata" readonly="1">
+                            <field name="create_date"/>
+                            <field name="sent_date"/>
+                            <field name="delivered_date"/>
+                            <field name="read_date"/>
+                            <field name="retry_count"/>
+                        </group>
+
+                        <group string="Error Information" readonly="1">
+                            <field name="error_message"/>
+                            <field name="response_data"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_whatsapp_message_tree" model="ir.ui.view">
+            <field name="name">ofitec.whatsapp.message.tree</field>
+            <field name="model">ofitec.whatsapp.message</field>
+            <field name="arch" type="xml">
+                <tree string="WhatsApp Messages" decoration-danger="status=='failed'" decoration-success="status=='read'">
+                    <field name="create_date"/>
+                    <field name="direction"/>
+                    <field name="from_phone"/>
+                    <field name="to_phone"/>
+                    <field name="message_type"/>
+                    <field name="status"/>
+                    <field name="content"/>
+                    <field name="next_action_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Actions -->
+        <record id="action_whatsapp_config" model="ir.actions.act_window">
+            <field name="name">WhatsApp Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.whatsapp.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_whatsapp_message" model="ir.actions.act_window">
+            <field name="name">WhatsApp Messages</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.whatsapp.message</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_whatsapp_root" name="WhatsApp" sequence="20" action="action_whatsapp_config"/>
+        <menuitem id="menu_whatsapp_config" name="Configuration" parent="menu_whatsapp_root" action="action_whatsapp_config"/>
+        <menuitem id="menu_whatsapp_messages" name="Messages" parent="menu_whatsapp_root" action="action_whatsapp_message"/>
+    </data>
+</odoo>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de lista para ProjectBudget -->
+        <record id="view_project_budget_tree" model="ir.ui.view">
+            <field name="name">ofitec.project.financials.tree</field>
+            <field name="model">ofitec.project.financials</field>
+            <field name="arch" type="xml">
+                <tree string="Presupuestos de Proyecto" decoration-success="state == 'completed'" decoration-info="state == 'active'" decoration-warning="state == 'approved'">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="budget_amount"/>
+                    <field name="progress_cost"/>
+                    <field name="variance_percentage" widget="percentage"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de formulario para ProjectBudget -->
+        <record id="view_project_budget_form" model="ir.ui.view">
+            <field name="name">ofitec.project.financials.form</field>
+            <field name="model">ofitec.project.financials</field>
+            <field name="arch" type="xml">
+                <form string="Presupuesto de Proyecto">
+                    <header>
+                        <button name="action_approve" string="Aprobar" type="object" states="draft" class="btn-primary"/>
+                        <button name="action_activate" string="Activar" type="object" states="approved" class="btn-success"/>
+                        <button name="action_complete" string="Completar" type="object" states="active" class="btn-info"/>
+                        <button name="action_cancel" string="Cancelar" type="object" states="draft,approved,active" class="btn-danger"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,active,completed,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre del presupuesto"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="project_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="budget_amount"/>
+                                <field name="currency_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="approval_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Tasasd de Costo">
+                            <group>
+                                <field name="cost_rate"/>
+                                <field name="material_cost_rate"/>
+                                <field name="equipment_cost_rate"/>
+                            </group>
+                        </group>
+                        <group string="Costos Calculados" colspan="4">
+                            <field name="progress_cost" readonly="1"/>
+                            <field name="estimated_total_cost" readonly="1"/>
+                            <field name="variance_amount" readonly="1"/>
+                            <field name="variance_percentage" readonly="1" widget="percentage"/>
+                        </group>
+                        <group>
+                            <field name="user_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de tablero (dashboard) -->
+        <record id="view_project_budget_dashboard" model="ir.ui.view">
+            <field name="name">ofitec.project.financials.dashboard</field>
+            <field name="model">ofitec.project.financials</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard Financiero" create="false" edit="false">
+                    <sheet>
+                        <div class="oe_dashboard">
+                            <div class="oe_dashboard_main">
+                                <div class="oe_dashboard_column">
+                                    <div class="oe_dashboard_section">
+                                        <h3>Resumen Ejecutivo</h3>
+                                        <div class="oe_dashboard_kanban">
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Presupuesto Total</h4>
+                                                    <div class="oe_currency_value">
+                                                        <field name="budget_amount" widget="monetary" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Costo Real</h4>
+                                                    <div class="oe_currency_value">
+                                                        <field name="progress_cost" widget="monetary" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4>Varianza</h4>
+                                                    <div class="oe_currency_value">
+                                                        <field name="variance_percentage" widget="percentage" readonly="1"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_project_budget" model="ir.actions.act_window">
+            <field name="name">Presupuestos de Proyecto</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.project.financials</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Acción de dashboard -->
+        <record id="action_project_budget_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard Financiero</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.project.financials</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_project_budget_dashboard"/>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_project_financials_root" name="Finanzas de Proyecto" sequence="30"/>
+        <menuitem id="menu_project_budgets" name="Presupuestos" parent="menu_project_financials_root" action="action_project_budget"/>
+        <menuitem id="menu_financial_dashboard" name="Dashboard Financiero" parent="menu_project_financials_root" action="action_project_budget_dashboard"/>
+    </data>
+</odoo>

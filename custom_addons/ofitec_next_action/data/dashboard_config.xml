@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Configuración del Dashboard como página de inicio -->
+        <record id="action_next_action_dashboard_home" model="ir.actions.act_window">
+            <field name="name">Dashboard Principal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.next.action</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_next_action_dashboard"/>
+            <field name="target">current</field>
+        </record>
+
+        <!-- Configurar como homepage para usuarios del grupo -->
+        <record id="homepage_next_action_dashboard" model="res.groups">
+            <field name="name">Dashboard Users</field>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <!-- Parámetros del sistema para configuración del dashboard -->
+        <record id="param_dashboard_refresh_interval" model="ir.config_parameter">
+            <field name="key">ofitec_next_action.dashboard_refresh_interval</field>
+            <field name="value">300</field> <!-- 5 minutos en segundos -->
+        </record>
+
+        <record id="param_ai_analysis_enabled" model="ir.config_parameter">
+            <field name="key">ofitec_next_action.ai_analysis_enabled</field>
+            <field name="value">true</field>
+        </record>
+
+        <record id="param_auto_generate_actions" model="ir.config_parameter">
+            <field name="key">ofitec_next_action.auto_generate_actions</field>
+            <field name="value">false</field>
+        </record>
+
+        <!-- Plantillas de acciones por defecto -->
+        <record id="action_template_risk_assessment" model="ofitec.next.action">
+            <field name="name">Evaluación de Riesgos de Seguridad</field>
+            <field name="action_type">scheduled</field>
+            <field name="priority">3</field>
+            <field name="category">risk</field>
+            <field name="status">template</field>
+            <field name="description">Plantilla para evaluación periódica de riesgos de seguridad en proyectos de construcción.</field>
+            <field name="recommended_actions">1. Revisar protocolos de seguridad
+2. Inspeccionar equipos de protección
+3. Verificar cumplimiento normativo
+4. Actualizar registros de seguridad</field>
+            <field name="expected_benefits">Mantenimiento de estándares de seguridad y reducción de accidentes</field>
+            <field name="required_resources">Equipo de seguridad, checklist de inspección</field>
+        </record>
+
+        <record id="action_template_budget_review" model="ofitec.next.action">
+            <field name="name">Revisión Mensual de Presupuesto</field>
+            <field name="action_type">scheduled</field>
+            <field name="priority">3</field>
+            <field name="category">financial</field>
+            <field name="status">template</field>
+            <field name="description">Plantilla para revisión mensual del presupuesto y análisis de varianzas.</field>
+            <field name="recommended_actions">1. Analizar gastos del mes
+2. Comparar con presupuesto planificado
+3. Identificar desviaciones significativas
+4. Proponer ajustes si es necesario</field>
+            <field name="expected_benefits">Control financiero proactivo y prevención de sobrecostos</field>
+            <field name="required_resources">Datos financieros actualizados, herramienta de análisis</field>
+        </record>
+
+        <record id="action_template_progress_update" model="ofitec.next.action">
+            <field name="name">Actualización de Progreso del Proyecto</field>
+            <field name="action_type">scheduled</field>
+            <field name="priority">3</field>
+            <field name="category">operational</field>
+            <field name="status">template</field>
+            <field name="description">Plantilla para actualización semanal del progreso del proyecto.</field>
+            <field name="recommended_actions">1. Revisar hitos completados
+2. Actualizar cronograma
+3. Identificar retrasos potenciales
+4. Comunicar progreso al equipo</field>
+            <field name="expected_benefits">Mejor seguimiento del proyecto y comunicación transparente</field>
+            <field name="required_resources">Datos de progreso, cronograma del proyecto</field>
+        </record>
+    </data>
+</odoo>

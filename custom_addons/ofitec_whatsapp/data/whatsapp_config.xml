@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Parámetros del sistema para WhatsApp -->
+        <record id="param_whatsapp_auto_send" model="ir.config_parameter">
+            <field name="key">ofitec_whatsapp.auto_send_notifications</field>
+            <field name="value">true</field>
+        </record>
+
+        <record id="param_whatsapp_min_priority" model="ir.config_parameter">
+            <field name="key">ofitec_whatsapp.minimum_priority_for_notification</field>
+            <field name="value">2</field>
+        </record>
+
+        <record id="param_whatsapp_message_template" model="ir.config_parameter">
+            <field name="key">ofitec_whatsapp.message_template</field>
+            <field name="value">urgent_action</field>
+        </record>
+
+        <record id="param_whatsapp_retry_attempts" model="ir.config_parameter">
+            <field name="key">ofitec_whatsapp.retry_attempts</field>
+            <field name="value">3</field>
+        </record>
+
+        <record id="param_whatsapp_webhook_timeout" model="ir.config_parameter">
+            <field name="key">ofitec_whatsapp.webhook_timeout</field>
+            <field name="value">30</field>
+        </record>
+
+        <!-- Grupos de seguridad adicionales -->
+        <record id="group_whatsapp_admin" model="res.groups">
+            <field name="name">WhatsApp Administrator</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="implied_ids" eval="[(4, ref('ofitec_security.group_supervisor'))]"/>
+        </record>
+
+        <!-- Reglas de registro para WhatsApp -->
+        <record id="audit_rule_whatsapp_message" model="auditlog.rule">
+            <field name="name">WhatsApp Messages Audit</field>
+            <field name="model_id" ref="ofitec_whatsapp.model_ofitec_whatsapp_message"/>
+            <field name="log_create">true</field>
+            <field name="log_write">true</field>
+            <field name="log_unlink">true</field>
+            <field name="log_read">false</field>
+            <field name="capture_record">true</field>
+        </record>
+
+        <!-- Configuración de notificaciones por defecto -->
+        <record id="notification_type_whatsapp" model="mail.message.subtype">
+            <field name="name">WhatsApp Notification</field>
+            <field name="res_model">ofitec.next.action</field>
+            <field name="default">false</field>
+            <field name="description">Notificación enviada por WhatsApp</field>
+        </record>
+
+        <!-- Plantillas de email/WhatsApp adicionales -->
+        <record id="template_whatsapp_reminder" model="mail.template">
+            <field name="name">WhatsApp - Action Reminder</field>
+            <field name="model_id" ref="ofitec_next_action.model_ofitec_next_action"/>
+            <field name="subject">⏰ Recordatorio - Acción pendiente</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif; max-width: 300px;">
+    <h3>⏰ Recordatorio de Acción</h3>
+    <p>Esta es una notificación de seguimiento para:</p>
+    <p><strong>${object.name}</strong></p>
+    <p>📅 <strong>Fecha límite:</strong> ${object.deadline or 'No especificada'}</p>
+    <p>🔥 <strong>Prioridad:</strong> ${object.priority}</p>
+    <p>¿Has podido revisar esta acción?</p>
+    <p>Responde con:</p>
+    <ul>
+        <li><strong>OK</strong> - Ya estoy trabajando en ello</li>
+        <li><strong>COMPLETADO</strong> - Ya está terminado</li>
+        <li><strong>CANCELAR</strong> - No puedo realizarlo</li>
+    </ul>
+</div>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

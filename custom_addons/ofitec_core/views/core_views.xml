@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de formulario para OfitecCore -->
+        <record id="view_ofitec_core_form" model="ir.ui.view">
+            <field name="name">ofitec.core.form</field>
+            <field name="model">ofitec.core</field>
+            <field name="arch" type="xml">
+                <form string="OFITEC Core">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de lista para OfitecCore -->
+        <record id="view_ofitec_core_tree" model="ir.ui.view">
+            <field name="name">ofitec.core.tree</field>
+            <field name="model">ofitec.core</field>
+            <field name="arch" type="xml">
+                <tree string="OFITEC Core">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_ofitec_core" model="ir.actions.act_window">
+            <field name="name">OFITEC Core</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.core</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_ofitec_root" name="OFITEC" sequence="10"/>
+        <menuitem id="menu_ofitec_core" name="Core" parent="menu_ofitec_root" action="action_ofitec_core"/>
+    </data>
+</odoo>

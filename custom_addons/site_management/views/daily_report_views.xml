@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de lista para DailyReport -->
+        <record id="view_daily_report_tree" model="ir.ui.view">
+            <field name="name">ofitec.daily.report.tree</field>
+            <field name="model">ofitec.daily.report</field>
+            <field name="arch" type="xml">
+                <tree string="Reportes Diarios" decoration-success="state == 'approved'" decoration-warning="state == 'submitted'" decoration-danger="state == 'rejected'">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="date"/>
+                    <field name="progress"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista de formulario para DailyReport -->
+        <record id="view_daily_report_form" model="ir.ui.view">
+            <field name="name">ofitec.daily.report.form</field>
+            <field name="model">ofitec.daily.report</field>
+            <field name="arch" type="xml">
+                <form string="Reporte Diario de Obra">
+                    <header>
+                        <button name="action_submit" string="Enviar" type="object" states="draft" class="btn-primary"/>
+                        <button name="action_approve" string="Aprobar" type="object" states="submitted" class="btn-success" groups="ofitec_security.group_supervisor"/>
+                        <button name="action_reject" string="Rechazar" type="object" states="submitted" class="btn-danger" groups="ofitec_security.group_supervisor"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,rejected"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Título del reporte"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="project_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="date"/>
+                                <field name="progress" widget="percentage"/>
+                                <field name="user_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="team_size"/>
+                                <field name="hours_worked"/>
+                                <field name="weather"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Trabajos Realizados">
+                                <field name="description" widget="html"/>
+                            </page>
+                            <page string="Incidencias">
+                                <field name="issues" widget="html"/>
+                            </page>
+                            <page string="Recursos">
+                                <group>
+                                    <field name="materials_used" widget="html"/>
+                                    <field name="equipment_used" widget="html"/>
+                                    <field name="subcontractors" widget="html"/>
+                                </group>
+                            </page>
+                            <page string="Calidad y Seguridad">
+                                <group>
+                                    <field name="safety_incidents" widget="html"/>
+                                    <field name="quality_checks" widget="html"/>
+                                </group>
+                            </page>
+                            <page string="Evidencias">
+                                <field name="photos" widget="many2many_binary"/>
+                            </page>
+                            <page string="Planificación">
+                                <group>
+                                    <field name="next_day_plan" widget="html"/>
+                                    <field name="client_feedback" widget="html"/>
+                                    <field name="supervisor_notes" widget="html"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de calendario -->
+        <record id="view_daily_report_calendar" model="ir.ui.view">
+            <field name="name">ofitec.daily.report.calendar</field>
+            <field name="model">ofitec.daily.report</field>
+            <field name="arch" type="xml">
+                <calendar string="Reportes Diarios" date_start="date" color="project_id">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="progress"/>
+                    <field name="user_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_daily_report" model="ir.actions.act_window">
+            <field name="name">Reportes Diarios</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.daily.report</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('user_id', '=', uid)]</field>
+            <field name="context">{'default_user_id': uid}</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_site_management_root" name="Gestión de Obra" sequence="20"/>
+        <menuitem id="menu_daily_reports" name="Reportes Diarios" parent="menu_site_management_root" action="action_daily_report"/>
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_next_action_user,ofitec.next.action.user,model_ofitec_next_action,base.group_user,1,0,0,0
+access_next_action_manager,ofitec.next.action.manager,model_ofitec_next_action,ofitec_security.group_supervisor,1,1,1,0
+access_next_action_admin,ofitec.next.action.admin,model_ofitec_next_action,base.group_system,1,1,1,1
