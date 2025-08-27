@@ -1059,3 +1059,26 @@ docuchat_ai: Indexación de documentos y búsqueda con IA.
 ai_bridge: Motor de análisis y predicciones para obra, finanzas y riesgos.
 Justificación: Son el núcleo diferencial de OFITEC, diseñados específicamente para el sector de construcción y urbanización.
 
+
+## Entregas de Innovación 2025
+
+Las siguientes entregas han sido incluidas en el proyecto:
+
+- [Entrega 0: Innovación 2025-08-09](ofitec_entrega_0_de_innovacion_2025_08_09.md)
+- [Entrega 1: Código listo para pegar](ofitec_entrega_1_de_innovacion_codigo_listo_para_pegar_2025_08_09.md)
+- [Entrega 2: Comparador OWL offline sync GraphQL optimizador](ofitec_entrega_2_de_innovacion_comparador_owl_offline_sync_graph_ql_optimizador_2025_08_09.md)
+- [Entrega 3: QHSE vision GraphQL offline con adjuntos CEO dashboard](ofitec_entrega_3_de_innovacion_qhse_vision_graph_ql_offline_con_adjuntos_ceo_dashboard_2025_08_10.md)
+- [Entrega 4: Anotación visual GraphQL series CEO subida con progreso](ofitec_entrega_4_de_innovacion_anotacion_visual_graph_ql_series_ceo_subida_con_progreso_2025_08_10.md)
+- [Entrega 5: Optimizador avanzado CEO KPIs pro QA automatizada](ofitec_entrega_5_de_innovacion_optimizador_avanzado_ceo_kpis_pro_qa_automatizada_2025_08_10.md)
+- [Entrega 6: Capacidad acumulativa overtime aging AR/AP lead time tests HTTP](ofitec_entrega_6_de_innovacion_capacidad_acumulativa_overtime_aging_ar_ap_lead_time_tests_http_2025_08_10.md)
+- [Entrega 6: Capacidad acumulativa overtime AR/AP aging tests E2E](ofitec_entrega_6_de_innovacion_capacidad_acumulativa_overtime_ar_ap_aging_tests_e_2_e_2025_08_10.md)
+- [Entrega 7: Despliegue hardening Docker backups monitoreo Google SSO SII F29](ofitec_entrega_7_despliegue_hardening_docker_backups_monitoreo_google_sso_sii_f_29_2025_08_10.md)
+- [Entrega 8: CI/CD backup remoto cifrado alertas Slack email F29 mapeo exportación](ofitec_entrega_8_ci_cd_backup_remoto_cifrado_alertas_slack_email_f_29_mapeo_exportacion_2025_08_10.md)
+- [Entrega 9: Autoscaling workers blue green exportación SII avanzada runbooks DR](ofitec_entrega_9_autoscaling_workers_blue_green_exportacion_sii_avanzada_runbooks_dr_2025_08_10.md)
+- [Entrega 10: Blue green automático WAL standby CSP F29 completo](ofitec_entrega_10_blue_green_automatico_wal_standby_csp_f_29_completo_2025_08_10.md)
+- [Entrega 11: Failover automático CSP report only enforce vault de secretos SII exploratorio](ofitec_entrega_11_failover_automatico_csp_report_only→enforce_vault_de_secretos_sii_exploratorio_2025_08_10.md)
+- [Entrega 12: Failover multi region rotación automática de secretos ETL financiero avanzado](ofitec_entrega_12_failover_multi_region_rotacion_automatica_de_secretos_etl_financiero_avanzado_2025_08.md)
+- [Entrega 13: Activo activo lecturas catálogo linaje de datos dashboards pack](ofitec_entrega_13_activo_activo_lecturas_catalogo_linaje_de_datos_dashboards_pack_2025_08_10.md)
+- [Entrega 13: Activo activo lecturas catálogo linaje de datos dashboards pack (1)](ofitec_entrega_13_activo_activo_lecturas_catalogo_linaje_de_datos_dashboards_pack_2025_08_10 (1).md)
+- [Entrega 14: Postgres analytics DuckDB server SLOs de BI y data contracts](ofitec_entrega_14_postgres_analytics_duck_db_server_slos_de_bi_y_data_contracts_2025_08_10.md)
+
