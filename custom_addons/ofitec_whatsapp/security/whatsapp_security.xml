@@ -4,7 +4,7 @@
         <!-- Reglas de seguridad adicionales para WhatsApp -->
         <record id="whatsapp_message_creation_rule" model="ir.rule">
             <field name="name">WhatsApp Message Creation Rule</field>
-            <field name="model_id" ref="ir.model_ofitec_whatsapp_message"/>
+            <field name="model_id" ref="model_ofitec_whatsapp_message"/>
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
             <field name="domain_force">[('create_uid', '=', user.id)]</field>
             <field name="perm_create">true</field>
@@ -15,7 +15,7 @@
 
         <record id="whatsapp_config_admin_rule" model="ir.rule">
             <field name="name">WhatsApp Config Admin Rule</field>
-            <field name="model_id" ref="ir.model_ofitec_whatsapp_config"/>
+            <field name="model_id" ref="model_ofitec_whatsapp_config"/>
             <field name="groups" eval="[(4, ref('base.group_system'))]"/>
             <field name="domain_force">[]</field>
             <field name="perm_create">true</field>
@@ -27,7 +27,7 @@
         <!-- Permisos específicos para webhooks -->
         <record id="access_webhook_user" model="ir.model.access">
             <field name="name">Webhook Access</field>
-            <field name="model_id" ref="ir.model_ofitec_whatsapp_webhook"/>
+            <field name="model_id" ref="model_ofitec_whatsapp_webhook"/>
             <field name="group_id" ref="base.group_public"/>
             <field name="perm_read">false</field>
             <field name="perm_write">false</field>

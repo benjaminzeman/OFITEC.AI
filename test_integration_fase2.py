@@ -6,7 +6,9 @@ Prueba el flujo completo: Reporte Diario → Incidentes → Riesgos → Costos F
 
 import sys
 import os
-sys.path.append('/workspaces/OFITEC.AI')
+from pathlib import Path
+repo_root = Path(__file__).resolve().parent
+sys.path.append(str(repo_root))
 
 def test_integration_flow():
     """Prueba el flujo completo de integración entre módulos"""
@@ -106,10 +108,10 @@ def test_module_dependencies():
     ]
 
     for module in modules:
-        module_path = f'/workspaces/OFITEC.AI/custom_addons/{module}'
-        if os.path.exists(module_path):
-            manifest_path = f'{module_path}/__manifest__.py'
-            if os.path.exists(manifest_path):
+        module_path = repo_root / 'custom_addons' / module
+        if module_path.exists():
+            manifest_path = module_path / '__manifest__.py'
+            if manifest_path.exists():
                 print(f"   ✅ {module}: Manifiesto encontrado")
             else:
                 print(f"   ❌ {module}: Manifiesto faltante")
@@ -128,8 +130,8 @@ def test_view_files():
     ]
 
     for module, view_file in views_to_check:
-        view_path = f'/workspaces/OFITEC.AI/custom_addons/{module}/views/{view_file}'
-        if os.path.exists(view_path):
+        view_path = repo_root / 'custom_addons' / module / 'views' / view_file
+        if view_path.exists():
             print(f"   ✅ {module}/{view_file}: Encontrado")
         else:
             print(f"   ❌ {module}/{view_file}: Faltante")

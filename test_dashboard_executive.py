@@ -6,7 +6,9 @@ Verifica que todas las métricas y componentes funcionen correctamente
 
 import sys
 import os
-sys.path.append('/workspaces/OFITEC.AI')
+from pathlib import Path
+repo_root = Path(__file__).resolve().parent
+sys.path.append(str(repo_root))
 
 def test_executive_dashboard():
     """Prueba completa del dashboard ejecutivo"""
@@ -149,8 +151,8 @@ def test_dashboard_components():
     ]
 
     for component in components:
-        component_path = f'/workspaces/OFITEC.AI/custom_addons/{component}'
-        if os.path.exists(component_path):
+        component_path = repo_root / 'custom_addons' / component
+        if component_path.exists():
             print(f"   ✅ {component}: Presente")
         else:
             print(f"   ❌ {component}: Faltante")
@@ -168,8 +170,8 @@ def test_dashboard_integration():
     ]
 
     for module, description in integrations:
-        module_path = f'/workspaces/OFITEC.AI/custom_addons/{module}'
-        if os.path.exists(module_path):
+        module_path = repo_root / 'custom_addons' / module
+        if module_path.exists():
             print(f"   ✅ {description}: ✅")
         else:
             print(f"   ❌ {description}: Módulo faltante")
@@ -235,7 +237,7 @@ def generate_dashboard_report():
 *Reporte generado automáticamente por sistema de validación OFITEC.AI*
 """
 
-    with open('/workspaces/OFITEC.AI/dashboard_status_report.md', 'w', encoding='utf-8') as f:
+    with open(repo_root / 'dashboard_status_report.md', 'w', encoding='utf-8') as f:
         f.write(report)
     print("   📄 Reporte generado: dashboard_status_report.md")
 

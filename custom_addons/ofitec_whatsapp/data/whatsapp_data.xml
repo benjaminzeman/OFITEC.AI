@@ -17,7 +17,7 @@
         <!-- WhatsApp Message Templates -->
         <record id="whatsapp_template_urgent_action" model="mail.template">
             <field name="name">WhatsApp - Urgent Action Notification</field>
-            <field name="model_id" ref="ir.model_ofitec_next_action"/>
+            <field name="model_id" ref="model_ofitec_next_action"/>
             <field name="subject">🚨 Acción Urgente - OFITEC</field>
             <field name="body_html"><![CDATA[
 <div style="font-family: Arial, sans-serif; max-width: 300px;">
@@ -38,7 +38,7 @@
 
         <record id="whatsapp_template_action_completed" model="mail.template">
             <field name="name">WhatsApp - Action Completed Confirmation</field>
-            <field name="model_id" ref="ir.model_ofitec_next_action"/>
+            <field name="model_id" ref="model_ofitec_next_action"/>
             <field name="subject">✅ Acción Completada - OFITEC</field>
             <field name="body_html"><![CDATA[
 <div style="font-family: Arial, sans-serif; max-width: 300px;">

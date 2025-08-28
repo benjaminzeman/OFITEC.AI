@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_daily_report_user,ofitec.daily.report.user,ir.model_ofitec_daily_report,base.group_user,1,1,1,0
-access_daily_report_supervisor,ofitec.daily.report.supervisor,ir.model_ofitec_daily_report,base.group_system,1,1,1,1
+access_daily_report_user,ofitec.daily.report.user,model_ofitec_daily_report,base.group_user,1,1,1,0
+access_daily_report_supervisor,ofitec.daily.report.supervisor,model_ofitec_daily_report,base.group_system,1,1,1,1
