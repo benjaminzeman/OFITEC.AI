@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- WhatsApp templates for Next Action -->
+
+        <record id="whatsapp_template_urgent_action" model="mail.template">
+            <field name="name">WhatsApp - Urgent Action Notification</field>
+            <field name="model_id" ref="ofitec_next_action.model_ofitec_next_action"/>
+            <field name="subject">Acción urgente - OFITEC</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif; max-width: 320px;">
+  <h3>Acción Urgente Requerida</h3>
+  <p><strong>${object.name}</strong></p>
+  <p>${object.description or ''}</p>
+  <p><strong>Prioridad:</strong> ${object.priority}</p>
+  <p><strong>Fecha límite:</strong> ${object.deadline or 'Inmediata'}</p>
+  <p>Responde con:</p>
+  <ul>
+    <li><strong>OK</strong> - Confirmar acción</li>
+    <li><strong>COMPLETADO</strong> - Marcar como completada</li>
+    <li><strong>CANCELAR</strong> - Cancelar acción</li>
+  </ul>
+  <p>Gracias por tu pronta atención.</p>
+  <p>OFITEC</p>
+</div>
+            ]]></field>
+        </record>
+
+        <record id="whatsapp_template_action_completed" model="mail.template">
+            <field name="name">WhatsApp - Action Completed Confirmation</field>
+            <field name="model_id" ref="ofitec_next_action.model_ofitec_next_action"/>
+            <field name="subject">Acción completada - OFITEC</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif; max-width: 320px;">
+  <h3>¡Acción Completada!</h3>
+  <p><strong>${object.name}</strong></p>
+  <p>Ha sido marcada como completada exitosamente.</p>
+  <p><strong>Completada por:</strong> ${object.user_id.name or 'Sistema'}</p>
+  <p><strong>Fecha:</strong> ${object.completed_date or ''}</p>
+  <p>Excelente trabajo.</p>
+  <p>OFITEC</p>
+  </div>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

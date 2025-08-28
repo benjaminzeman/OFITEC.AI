@@ -7,6 +7,11 @@ Prueba el flujo completo: Reporte Diario → Incidentes → Riesgos → Costos F
 import sys
 import os
 from pathlib import Path
+# Ensure UTF-8 stdout to avoid Windows console encode errors
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 repo_root = Path(__file__).resolve().parent
 sys.path.append(str(repo_root))
 

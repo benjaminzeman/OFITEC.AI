@@ -1,17 +1,55 @@
 /* OFITEC Base Styles */
 
-.ofitec-header {
-    background-color: #007bff;
-    color: white;
+/* Design tokens */
+:root {
+  --of-primary: #0f62fe;
+  --of-primary-600: #0b4bc4;
+  --of-success: #198754;
+  --of-warning: #ffc107;
+  --of-danger: #dc3545;
+  --of-surface: #ffffff;
+  --of-surface-2: #f6f8fa;
+  --of-text: #1f2328;
+  --of-muted: #6c757d;
+  --of-radius: 8px;
+  --of-gap: 12px;
 }
 
-.ofitec-dashboard {
-    padding: 20px;
+.ofitec-header {
+  background-color: var(--of-primary);
+  color: #fff;
 }
+
+.ofitec-dashboard { padding: 20px; }
 
 .ofitec-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
+  border: 1px solid #e1e4e8;
+  border-radius: var(--of-radius);
+  padding: 15px;
+  margin: 10px 0;
+  background: var(--of-surface);
 }
+
+/* Chips & badges */
+.of-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--of-surface-2);
+  color: var(--of-text);
+}
+.of-chip.success { background: rgba(25,135,84,.1); color: var(--of-success); }
+.of-chip.warning { background: rgba(255,193,7,.15); color: #aa7a01; }
+.of-chip.danger { background: rgba(220,53,69,.12); color: var(--of-danger); }
+
+/* Kanban tweaks */
+.o_kanban_record { border-radius: var(--of-radius); }
+.o_kanban_card_header { font-weight: 600; }
+
+/* Buttons accent */
+.btn-primary, .o_form_button_save {
+  background-color: var(--of-primary);
+  border-color: var(--of-primary);
+}
+.btn-primary:hover { background-color: var(--of-primary-600); border-color: var(--of-primary-600); }

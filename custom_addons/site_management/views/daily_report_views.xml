@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Búsqueda para DailyReport -->
+        <record id="view_daily_report_search" model="ir.ui.view">
+            <field name="name">ofitec.daily.report.search</field>
+            <field name="model">ofitec.daily.report</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Reportes">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="date"/>
+                    <filter string="Aprobados" name="approved" domain="[('state','=','approved')]"/>
+                    <filter string="Enviados" name="submitted" domain="[('state','=','submitted')]"/>
+                    <filter string="Rechazados" name="rejected" domain="[('state','=','rejected')]"/>
+                    <group expand="0" string="Agrupar por">
+                        <filter string="Proyecto" name="grp_project" context="{'group_by':'project_id'}"/>
+                        <filter string="Estado" name="grp_state" context="{'group_by':'state'}"/>
+                        <filter string="Fecha" name="grp_date" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
         <!-- Vista de lista para DailyReport -->
         <record id="view_daily_report_tree" model="ir.ui.view">
             <field name="name">ofitec.daily.report.tree</field>
@@ -103,18 +123,50 @@
             </field>
         </record>
 
+        <!-- Kanban para DailyReport -->
+        <record id="view_daily_report_kanban" model="ir.ui.view">
+            <field name="name">ofitec.daily.report.kanban</field>
+            <field name="model">ofitec.daily.report</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="project_id" class="o_kanban_small">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_record">
+                                <div class="o_kanban_card_header">
+                                    <field name="name"/>
+                                </div>
+                                <div>
+                                    <span class="of-chip" t-attf-class="of-chip #{record.state.raw_value == 'approved' ? 'success' : record.state.raw_value == 'submitted' ? 'warning' : record.state.raw_value == 'rejected' ? 'danger' : ''}">
+                                        <field name="state"/>
+                                    </span>
+                                </div>
+                                <div>
+                                    <field name="date"/>
+                                    <span>•</span>
+                                    <field name="progress" widget="percentage"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <!-- Acción de ventana -->
         <record id="action_daily_report" model="ir.actions.act_window">
             <field name="name">Reportes Diarios</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">ofitec.daily.report</field>
-            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_mode">kanban,tree,form,calendar</field>
             <field name="domain">[('user_id', '=', uid)]</field>
             <field name="context">{'default_user_id': uid}</field>
+            <field name="search_view_id" ref="view_daily_report_search"/>
         </record>
 
         <!-- Menú -->
         <menuitem id="menu_site_management_root" name="Gestión de Obra" sequence="20"/>
         <menuitem id="menu_daily_reports" name="Reportes Diarios" parent="menu_site_management_root" action="action_daily_report"/>
+        <menuitem id="menu_site_management_app" name="Obra" parent="menu_site_management_root" action="action_daily_report" sequence="19"/>
     </data>
 </odoo>
+

@@ -10,42 +10,44 @@ from . import security
 from . import config
 
 # Module metadata
-__version__ = '1.0.0'
-__author__ = 'OFITEC.AI Team'
-__description__ = 'Advanced AI module with ML models, predictive analytics, and real-time metrics'
+__version__ = "1.0.0"
+__author__ = "OFITEC.AI Team"
+__description__ = (
+    "Advanced AI module with ML models, predictive analytics, and real-time metrics"
+)
 
 # Import main classes for easy access
 from .models.ai_advanced import (
     AIAnalyticsEngine,
     AIPredictiveAnalytics,
     AIRealTimeAnalytics,
-    AIAPIController
+    AIAPIController,
 )
 
 from .controllers.ai_api import (
     AIAnalyticsAPI,
     AIWebhookController,
-    AISecurityController
+    AISecurityController,
 )
 
 from .security.ai_security import (
     AIAPIAccessLog,
     AIWebhookSecurity,
     AIEncryption,
-    AISecurityAudit
+    AISecurityAudit,
 )
 
-from .models.scaling import (
-    AIScalingConfiguration,
-    AIMonitoringDashboard
-)
+from .models.scaling import AIScalingConfiguration, AIMonitoringDashboard
+
 
 # Initialize module
 def _initialize_module():
     """Initialize the AI advanced module"""
     import logging
+
     _logger = logging.getLogger(__name__)
     _logger.info("Initializing Advanced AI Module v%s", __version__)
+
 
 # Call initialization
 _initialize_module()

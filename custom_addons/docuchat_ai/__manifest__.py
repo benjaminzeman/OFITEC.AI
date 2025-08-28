@@ -5,5 +5,5 @@
     "data": [],
     "license": "LGPL-3",
     "author": "OFITEC",
-    "description": "Indexación de documentos y búsqueda inteligente con IA."
+    "description": "Indexación de documentos y búsqueda inteligente con IA.",
 }

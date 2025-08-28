@@ -5,6 +5,11 @@ Script de prueba para verificar el funcionamiento de los modelos de Machine Lear
 import sys
 import os
 sys.path.append('/usr/lib/python3/dist-packages')
+# Ensure UTF-8 stdout to avoid Windows console encode errors
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 
 def test_ml_libraries():
     """Prueba las librerías de ML instaladas"""

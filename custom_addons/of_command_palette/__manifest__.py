@@ -11,22 +11,21 @@
         "project_risk",
         "project_financials",
         "ai_bridge",
-        "docuchat_ai"
     ],
     "data": [
         "views/command_palette_views.xml",
         "views/command_palette_menus.xml",
         "data/command_palette_data.xml",
-        "security/ir.model.access.csv"
+        "security/ir.model.access.csv",
     ],
     "assets": {
         "web.assets_backend": [
             "of_command_palette/static/src/js/palette.js",
             "of_command_palette/static/src/xml/palette.xml",
-            "of_command_palette/static/src/css/palette.css"
+            "of_command_palette/static/src/css/palette.css",
         ]
     },
     "license": "LGPL-3",
     "author": "OFITEC",
-    "description": "Command Palette inteligente con IA integrada para gestión de proyectos de construcción."
+    "description": "Command Palette inteligente con IA integrada para gestión de proyectos de construcción.",
 }

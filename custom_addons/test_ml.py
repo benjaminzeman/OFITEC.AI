@@ -4,7 +4,14 @@ Script de prueba para verificar el funcionamiento de los modelos de Machine Lear
 """
 import sys
 import os
-sys.path.append('/usr/lib/python3/dist-packages')
+
+sys.path.append("/usr/lib/python3/dist-packages")
+# Ensure UTF-8 stdout to avoid Windows console encode errors
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 
 def test_ml_libraries():
     """Prueba las librerías de ML instaladas"""
@@ -12,6 +19,7 @@ def test_ml_libraries():
 
     try:
         import numpy as np
+
         print("✅ NumPy:", np.__version__)
     except ImportError as e:
         print("❌ NumPy no disponible:", e)
@@ -19,6 +27,7 @@ def test_ml_libraries():
 
     try:
         import pandas as pd
+
         print("✅ Pandas:", pd.__version__)
     except ImportError as e:
         print("❌ Pandas no disponible:", e)
@@ -28,6 +37,7 @@ def test_ml_libraries():
         import sklearn
         from sklearn.ensemble import RandomForestClassifier
         from sklearn.model_selection import train_test_split
+
         print("✅ Scikit-learn:", sklearn.__version__)
     except ImportError as e:
         print("❌ Scikit-learn no disponible:", e)
@@ -35,6 +45,7 @@ def test_ml_libraries():
 
     try:
         import xgboost as xgb
+
         print("✅ XGBoost:", xgb.__version__)
     except ImportError as e:
         print("❌ XGBoost no disponible:", e)
@@ -42,6 +53,7 @@ def test_ml_libraries():
 
     try:
         import lightgbm as lgb
+
         print("✅ LightGBM:", lgb.__version__)
     except ImportError as e:
         print("❌ LightGBM no disponible:", e)
@@ -49,6 +61,7 @@ def test_ml_libraries():
 
     try:
         import tensorflow as tf
+
         print("✅ TensorFlow:", tf.__version__)
     except ImportError as e:
         print("❌ TensorFlow no disponible:", e)
@@ -75,7 +88,7 @@ def test_ml_libraries():
     # Probar XGBoost
     try:
         dtrain = xgb.DMatrix(X, label=y)
-        params = {'objective': 'binary:logistic', 'max_depth': 3}
+        params = {"objective": "binary:logistic", "max_depth": 3}
         bst = xgb.train(params, dtrain, num_boost_round=10)
         pred = bst.predict(dtrain)[:5]
         print("✅ XGBoost: Modelo entrenado y predicho correctamente")
@@ -86,7 +99,7 @@ def test_ml_libraries():
     # Probar LightGBM
     try:
         train_data = lgb.Dataset(X, label=y)
-        params = {'objective': 'binary', 'metric': 'binary_logloss'}
+        params = {"objective": "binary", "metric": "binary_logloss"}
         bst = lgb.train(params, train_data, num_boost_round=10)
         pred = bst.predict(X[:5])
         print("✅ LightGBM: Modelo entrenado y predicho correctamente")
@@ -96,6 +109,7 @@ def test_ml_libraries():
 
     print("\n🎉 ¡Todas las librerías de ML funcionan correctamente!")
     return True
+
 
 if __name__ == "__main__":
     success = test_ml_libraries()

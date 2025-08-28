@@ -7,6 +7,11 @@ Verifica que todas las métricas y componentes funcionen correctamente
 import sys
 import os
 from pathlib import Path
+# Ensure UTF-8 stdout to avoid Windows console encode errors
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 repo_root = Path(__file__).resolve().parent
 sys.path.append(str(repo_root))
 
@@ -99,9 +104,10 @@ def test_executive_dashboard():
 
         print("\n✅ 3. Gestión Financiera:")
         financials = dashboard_data['financials']
-        print(",.0f")
-        print(",.0f")
-        print(".1f")
+        # Mostrar montos y porcentajes correctamente formateados
+        print(f"   Presupuesto Total: {financials['total_budget']:,.0f}")
+        print(f"   Costo Real Total: {financials['total_cost']:,.0f}")
+        print(f"   Varianza Promedio: {financials['avg_variance']:.1f}%")
         print("\n✅ 4. Sistema de Alertas:")
         alerts = dashboard_data['alerts']
         for alert in alerts:

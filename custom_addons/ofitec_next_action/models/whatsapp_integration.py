@@ -13,16 +13,24 @@ _logger = logging.getLogger(__name__)
 class NextAction(models.Model):
     """Extend NextAction model to integrate with WhatsApp"""
 
-    _inherit = 'ofitec.next.action'
+    _inherit = "ofitec.next.action"
 
     # WhatsApp Integration Fields
-    whatsapp_enabled = fields.Boolean(string='Enable WhatsApp Notifications',
-                                      default=True,
-                                      help='Send WhatsApp notifications for this action')
-    whatsapp_sent = fields.Boolean(string='WhatsApp Sent', readonly=True,
-                                   help='Whether WhatsApp notification was sent')
-    whatsapp_recipients = fields.Many2many('res.partner', string='WhatsApp Recipients',
-                                           help='Contacts to notify via WhatsApp')
+    whatsapp_enabled = fields.Boolean(
+        string="Enable WhatsApp Notifications",
+        default=True,
+        help="Send WhatsApp notifications for this action",
+    )
+    whatsapp_sent = fields.Boolean(
+        string="WhatsApp Sent",
+        readonly=True,
+        help="Whether WhatsApp notification was sent",
+    )
+    whatsapp_recipients = fields.Many2many(
+        "res.partner",
+        string="WhatsApp Recipients",
+        help="Contacts to notify via WhatsApp",
+    )
 
     @api.model
     def create(self, vals):
@@ -30,11 +38,19 @@ class NextAction(models.Model):
         record = super(NextAction, self).create(vals)
 
         # Send WhatsApp notification if enabled and action is urgent
-        if record.whatsapp_enabled and record.priority <= 2:
+        # priority is a selection of strings; convert safely
+        prio = (
+            int(record.priority)
+            if isinstance(record.priority, str) and record.priority.isdigit()
+            else record.priority
+        )
+        if record.whatsapp_enabled and prio and int(prio) <= 2:
             try:
                 record._send_whatsapp_notification()
             except Exception as e:
-                _logger.error(f"Failed to send WhatsApp notification for action {record.id}: {e}")
+                _logger.error(
+                    f"Failed to send WhatsApp notification for action {record.id}: {e}"
+                )
                 # Don't fail the creation, just log the error
 
         return record
@@ -44,13 +60,21 @@ class NextAction(models.Model):
         result = super(NextAction, self).write(vals)
 
         # Send notification if priority changed to urgent
-        if 'priority' in vals and vals['priority'] <= 2:
-            for record in self:
-                if record.whatsapp_enabled and not record.whatsapp_sent:
-                    try:
-                        record._send_whatsapp_notification()
-                    except Exception as e:
-                        _logger.error(f"Failed to send WhatsApp notification for action {record.id}: {e}")
+        if "priority" in vals:
+            pv = vals["priority"]
+            try:
+                pv_int = int(pv)
+            except Exception:
+                pv_int = 99
+            if pv_int <= 2:
+                for record in self:
+                    if record.whatsapp_enabled and not record.whatsapp_sent:
+                        try:
+                            record._send_whatsapp_notification()
+                        except Exception as e:
+                            _logger.error(
+                                f"Failed to send WhatsApp notification for action {record.id}: {e}"
+                            )
 
         return result
 
@@ -60,7 +84,7 @@ class NextAction(models.Model):
 
         # Get active WhatsApp configuration
         try:
-            whatsapp_config = self.env['ofitec.whatsapp.config'].get_active_config()
+            whatsapp_config = self.env["ofitec.whatsapp.config"].get_active_config()
         except UserError:
             _logger.warning("No active WhatsApp configuration found")
             return
@@ -80,24 +104,26 @@ class NextAction(models.Model):
             phone_number = recipient.mobile or recipient.phone
             if phone_number:
                 # Format phone number (add + if missing)
-                if not phone_number.startswith('+'):
-                    phone_number = '+' + phone_number
+                if not phone_number.startswith("+"):
+                    phone_number = "+" + phone_number
 
                 try:
                     result = whatsapp_config.send_message(phone_number, message_text)
-                    if result['success']:
+                    if result["success"]:
                         success_count += 1
-                        _logger.info(f"WhatsApp notification sent to {phone_number} for action {self.id}")
+                        _logger.info(
+                            f"WhatsApp notification sent to {phone_number} for action {self.id}"
+                        )
                     else:
-                        _logger.error(f"Failed to send WhatsApp to {phone_number}: {result['error']}")
+                        _logger.error(
+                            f"Failed to send WhatsApp to {phone_number}: {result['error']}"
+                        )
                 except Exception as e:
                     _logger.error(f"Error sending WhatsApp to {phone_number}: {e}")
 
         # Mark as sent if at least one message was successful
         if success_count > 0:
-            self.write({
-                'whatsapp_sent': True
-            })
+            self.write({"whatsapp_sent": True})
 
     def _get_whatsapp_recipients(self):
         """Get list of recipients for WhatsApp notifications"""
@@ -131,14 +157,9 @@ class NextAction(models.Model):
         """Prepare WhatsApp message content"""
         self.ensure_one()
 
-        priority_emojis = {
-            1: '🚨',
-            2: '⚡',
-            3: '📋',
-            4: '📝'
-        }
+        priority_emojis = {1: "🚨", 2: "⚡", 3: "📋", 4: "📝"}
 
-        emoji = priority_emojis.get(self.priority, '📝')
+        emoji = priority_emojis.get(self.priority, "📝")
 
         message = f"""{emoji} *ACCIÓN REQUERIDA - OFITEC*
 
@@ -172,29 +193,20 @@ class NextAction(models.Model):
 
         try:
             self._send_whatsapp_notification()
-            return {
-                'success': True,
-                'message': 'WhatsApp reminder sent successfully'
-            }
+            return {"success": True, "message": "WhatsApp reminder sent successfully"}
         except Exception as e:
             _logger.error(f"Failed to send WhatsApp reminder: {e}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+            return {"success": False, "error": str(e)}
 
     def action_mark_completed_via_whatsapp(self):
         """Mark action as completed via WhatsApp response"""
         self.ensure_one()
 
-        self.write({
-            'status': 'completed',
-            'completed_date': fields.Datetime.now()
-        })
+        self.write({"status": "completed", "completed_date": fields.Datetime.now()})
 
         # Send confirmation via WhatsApp
         try:
-            whatsapp_config = self.env['ofitec.whatsapp.config'].get_active_config()
+            whatsapp_config = self.env["ofitec.whatsapp.config"].get_active_config()
             recipients = self._get_whatsapp_recipients()
 
             confirmation_message = f"""🎉 *ACCIÓN COMPLETADA*
@@ -207,8 +219,8 @@ class NextAction(models.Model):
 
             for recipient in recipients:
                 phone_number = recipient.mobile or recipient.phone
-                if phone_number and not phone_number.startswith('+'):
-                    phone_number = '+' + phone_number
+                if phone_number and not phone_number.startswith("+"):
+                    phone_number = "+" + phone_number
 
                 if phone_number:
                     whatsapp_config.send_message(phone_number, confirmation_message)
@@ -220,13 +232,11 @@ class NextAction(models.Model):
         """Confirm action via WhatsApp response"""
         self.ensure_one()
 
-        self.write({
-            'status': 'in_progress'
-        })
+        self.write({"status": "in_progress"})
 
         # Send confirmation
         try:
-            whatsapp_config = self.env['ofitec.whatsapp.config'].get_active_config()
+            whatsapp_config = self.env["ofitec.whatsapp.config"].get_active_config()
             recipients = self._get_whatsapp_recipients()
 
             confirmation_message = f"""✅ *ACCIÓN CONFIRMADA*
@@ -240,8 +250,8 @@ Te notificaremos cuando esté completada."""
 
             for recipient in recipients:
                 phone_number = recipient.mobile or recipient.phone
-                if phone_number and not phone_number.startswith('+'):
-                    phone_number = '+' + phone_number
+                if phone_number and not phone_number.startswith("+"):
+                    phone_number = "+" + phone_number
 
                 if phone_number:
                     whatsapp_config.send_message(phone_number, confirmation_message)
@@ -253,18 +263,24 @@ Te notificaremos cuando esté completada."""
 class WhatsAppConfig(models.Model):
     """Extend WhatsApp config to integrate with Next Action"""
 
-    _inherit = 'ofitec.whatsapp.config'
+    _inherit = "ofitec.whatsapp.config"
 
     # Integration settings
-    auto_notify_urgent_actions = fields.Boolean(string='Auto-notify Urgent Actions',
-                                                default=True,
-                                                help='Automatically send WhatsApp notifications for urgent actions')
-    notify_project_managers = fields.Boolean(string='Notify Project Managers',
-                                             default=True,
-                                             help='Send notifications to project managers')
-    notify_team_leaders = fields.Boolean(string='Notify Team Leaders',
-                                         default=False,
-                                         help='Send notifications to team leaders')
+    auto_notify_urgent_actions = fields.Boolean(
+        string="Auto-notify Urgent Actions",
+        default=True,
+        help="Automatically send WhatsApp notifications for urgent actions",
+    )
+    notify_project_managers = fields.Boolean(
+        string="Notify Project Managers",
+        default=True,
+        help="Send notifications to project managers",
+    )
+    notify_team_leaders = fields.Boolean(
+        string="Notify Team Leaders",
+        default=False,
+        help="Send notifications to team leaders",
+    )
 
     def send_urgent_action_notification(self, action):
         """Send WhatsApp notification for urgent action"""

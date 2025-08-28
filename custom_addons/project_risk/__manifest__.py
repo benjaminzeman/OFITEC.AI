@@ -5,5 +5,5 @@
     "data": [],
     "license": "LGPL-3",
     "author": "OFITEC",
-    "description": "Identificación y seguimiento de riesgos con IA."
+    "description": "Identificación y seguimiento de riesgos con IA.",
 }

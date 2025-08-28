@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Búsqueda para Presupuestos -->
+        <record id="view_project_financials_search" model="ir.ui.view">
+            <field name="name">ofitec.project.financials.search</field>
+            <field name="model">ofitec.project.financials</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Presupuestos">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <filter string="Activos" name="active" domain="[('state','=','active')]"/>
+                    <filter string="Varianza > 15%" name="var_high" domain="[('variance_percentage','>',15)]"/>
+                    <group expand="0" string="Agrupar por">
+                        <filter string="Proyecto" name="grp_project" context="{'group_by':'project_id'}"/>
+                        <filter string="Estado" name="grp_state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
         <!-- Vista de lista para ProjectBudget -->
         <record id="view_project_budget_tree" model="ir.ui.view">
             <field name="name">ofitec.project.financials.tree</field>
@@ -128,6 +145,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">ofitec.project.financials</field>
             <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_project_financials_search"/>
         </record>
 
         <!-- Acción de dashboard -->

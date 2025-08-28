@@ -4,7 +4,9 @@ Script para probar las funcionalidades del módulo OFITEC AI desde dentro de Odo
 """
 import sys
 import os
-sys.path.insert(0, '/usr/lib/python3/dist-packages')
+
+sys.path.insert(0, "/usr/lib/python3/dist-packages")
+
 
 def test_ofitec_ai_module():
     """Prueba las funcionalidades del módulo OFITEC AI"""
@@ -15,6 +17,7 @@ def test_ofitec_ai_module():
         import odoo
         from odoo import api, fields, models
         from odoo.api import Environment
+
         print("✅ Odoo importado correctamente")
     except ImportError as e:
         print("❌ Error importando Odoo:", e)
@@ -23,11 +26,9 @@ def test_ofitec_ai_module():
     try:
         # Conectar a la base de datos usando SQLAlchemy
         import psycopg2
+
         conn = psycopg2.connect(
-            host="db",
-            database="ofitec",
-            user="odoo",
-            password="odoo"
+            host="db", database="ofitec", user="odoo", password="odoo"
         )
         conn.close()
         print("✅ Conexión a base de datos 'ofitec' exitosa")
@@ -38,10 +39,11 @@ def test_ofitec_ai_module():
     try:
         # Probar importar el módulo ofitec_ai_advanced
         from odoo.addons.ofitec_ai_advanced.models import ai_advanced
+
         print("✅ Módulo ofitec_ai_advanced importado correctamente")
 
         # Verificar que la clase AIAnalyticsEngine existe
-        if hasattr(ai_advanced, 'AIAnalyticsEngine'):
+        if hasattr(ai_advanced, "AIAnalyticsEngine"):
             print("✅ Clase AIAnalyticsEngine encontrada")
         else:
             print("❌ Clase AIAnalyticsEngine no encontrada")
@@ -60,14 +62,14 @@ def test_ofitec_ai_module():
         print("✅ Instancia de AIAnalyticsEngine creada")
 
         # Probar métodos básicos
-        if hasattr(engine, 'get_available_algorithms'):
+        if hasattr(engine, "get_available_algorithms"):
             algorithms = engine.get_available_algorithms()
             print(f"✅ Algoritmos disponibles: {algorithms}")
 
-        if hasattr(engine, 'validate_model_parameters'):
+        if hasattr(engine, "validate_model_parameters"):
             # Probar validación de parámetros
-            test_params = {'n_estimators': 100, 'max_depth': 10}
-            is_valid = engine.validate_model_parameters('xgboost', test_params)
+            test_params = {"n_estimators": 100, "max_depth": 10}
+            is_valid = engine.validate_model_parameters("xgboost", test_params)
             print(f"✅ Validación de parámetros XGBoost: {is_valid}")
 
     except Exception as e:
@@ -76,6 +78,7 @@ def test_ofitec_ai_module():
 
     print("\n🎉 ¡Módulo OFITEC AI funciona correctamente!")
     return True
+
 
 if __name__ == "__main__":
     success = test_ofitec_ai_module()

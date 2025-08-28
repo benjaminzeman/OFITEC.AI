@@ -4,9 +4,10 @@
     "depends": ["ofitec_core", "ofitec_security", "project"],
     "data": [
         "views/daily_report_views.xml",
-        "security/ir.model.access.csv"
+        "views/menu.xml",
+        "security/ir.model.access.csv",
     ],
     "license": "LGPL-3",
     "author": "OFITEC",
-    "description": "Gestión de avances de obra y reportes diarios."
+    "description": "Gestión de avances de obra y reportes diarios.",
 }

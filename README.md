@@ -1082,3 +1082,23 @@ Las siguientes entregas han sido incluidas en el proyecto:
 - [Entrega 13: Activo activo lecturas catálogo linaje de datos dashboards pack (1)](ofitec_entrega_13_activo_activo_lecturas_catalogo_linaje_de_datos_dashboards_pack_2025_08_10 (1).md)
 - [Entrega 14: Postgres analytics DuckDB server SLOs de BI y data contracts](ofitec_entrega_14_postgres_analytics_duck_db_server_slos_de_bi_y_data_contracts_2025_08_10.md)
 
+\n## Puesta en Marcha (Local)
+
+- Requisitos: Docker y Docker Compose.
+- Levantar servicios: `docker-compose up -d`.
+- Acceder a Odoo: `http://localhost:8069`.
+- Primer uso:
+  - Activar modo desarrollador.
+  - Apps > Update Apps List.
+  - Instalar módulos de `custom_addons` según necesidad (ej.: `OFITEC Core`, `OFITEC Security`, `Site Management`, `Project Financials`, `Project Risk`, `OFITEC WhatsApp`).
+
+## Pruebas Rápidas
+
+- Validación de integraciones: `python test_integration_fase2.py`.
+- Validación dashboard: `python test_dashboard_executive.py`.
+- Pruebas ML (opcional, requieren dependencias pesadas): `python test_ml.py`.
+
+## CI/CD
+
+- Job principal ejecuta lint, validación de compose y pruebas ligeras.
+- Pruebas de librerías ML se ejecutan solo en rama `main`.

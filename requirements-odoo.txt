@@ -1,0 +1,9 @@
+# Minimal Python dependencies to enable ofitec_ai_advanced import
+# Keep lean to avoid conflicts with Debian-managed packages in odoo:16
+
+numpy
+pandas
+scikit-learn
+xgboost
+lightgbm
+redis>=5

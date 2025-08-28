@@ -14,51 +14,13 @@
             <field name="default_language">es</field>
         </record>
 
-        <!-- WhatsApp Message Templates -->
-        <record id="whatsapp_template_urgent_action" model="mail.template">
-            <field name="name">WhatsApp - Urgent Action Notification</field>
-            <field name="model_id" ref="model_ofitec_next_action"/>
-            <field name="subject">🚨 Acción Urgente - OFITEC</field>
-            <field name="body_html"><![CDATA[
-<div style="font-family: Arial, sans-serif; max-width: 300px;">
-    <h3>🚨 Acción Urgente Requerida</h3>
-    <p><strong>${object.name}</strong></p>
-    <p>${object.description}</p>
-    <p><strong>Prioridad:</strong> ${object.priority}</p>
-    <p><strong>Fecha límite:</strong> ${object.deadline or 'Inmediata'}</p>
-    <p>Responde con:</p>
-    <ul>
-        <li><strong>OK</strong> - Confirmar acción</li>
-        <li><strong>COMPLETADO</strong> - Marcar como completada</li>
-        <li><strong>CANCELAR</strong> - Cancelar acción</li>
-    </ul>
-</div>
-            ]]></field>
-        </record>
-
-        <record id="whatsapp_template_action_completed" model="mail.template">
-            <field name="name">WhatsApp - Action Completed Confirmation</field>
-            <field name="model_id" ref="model_ofitec_next_action"/>
-            <field name="subject">✅ Acción Completada - OFITEC</field>
-            <field name="body_html"><![CDATA[
-<div style="font-family: Arial, sans-serif; max-width: 300px;">
-    <h3>🎉 ¡Acción Completada!</h3>
-    <p><strong>${object.name}</strong></p>
-    <p>Ha sido marcada como completada exitosamente.</p>
-    <p><strong>Completada por:</strong> ${object.completed_by.name or 'Sistema'}</p>
-    <p><strong>Fecha:</strong> ${object.completed_date}</p>
-    <p>¡Excelente trabajo! 👏</p>
-</div>
-            ]]></field>
-        </record>
-
         <!-- Sample WhatsApp Messages -->
         <record id="whatsapp_message_sample_1" model="ofitec.whatsapp.message">
             <field name="config_id" ref="whatsapp_config_demo"/>
             <field name="direction">outbound</field>
             <field name="to_phone">+56912345678</field>
             <field name="message_type">text</field>
-            <field name="content">🚨 Acción Urgente: Revisar riesgo crítico identificado en proyecto principal</field>
+            <field name="content">Acción: Revisar riesgo crítico identificado en proyecto principal</field>
             <field name="status">sent</field>
             <field name="whatsapp_message_id">wamid.sample123</field>
         </record>
