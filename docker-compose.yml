@@ -15,10 +15,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.odoo
-    image: ofitec-odoo:16-ml
     depends_on:
       - db
-      - redis
     environment:
       HOST: db
       USER: odoo
@@ -32,17 +30,12 @@ services:
     command: [
       "odoo",
       "-d","ofitec",
-      "--init","base,web,bus,mail,project,account",
       "--without-demo","all",
       "--addons-path=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons",
       "--db_host=db",
       "--db_user=odoo",
       "--db_password=odoo"
     ]
-
-  redis:
-    image: redis:7-alpine
-    restart: unless-stopped
 
 volumes:
   db_data:

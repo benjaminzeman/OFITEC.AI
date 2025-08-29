@@ -1,0 +1,22 @@
+:root {
+  /* Brand palette (DeFi azul + acentos) */
+  --of-primary: #1E3A8A;      /* Indigo 800 */
+  --of-secondary: #0B1E3D;    /* Navy */
+  --of-accent: #10B981;       /* Emerald */
+  --of-accent-cyan: #22D3EE;  /* Cyan */
+  --of-bg-light: #F4F7FB;
+  --of-bg-dark: #0E1626;
+  --of-surface-light: #FFFFFF;
+  --of-surface-dark: #121A2B;
+  --of-text-dark: #111827;
+  --of-text-light: #E5E7EB;
+  --of-radius: 14px;
+  --of-font-base: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+
+  /* Map to Odoo brand variables (affects navbar, buttons, etc.) */
+  --o-brand-odoo: var(--of-primary);
+  --o-brand-primary: var(--of-primary);
+  --o-brand-secondary: var(--of-secondary);
+  --o-brand-accessory: var(--of-accent);
+}
+

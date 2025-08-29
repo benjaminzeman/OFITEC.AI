@@ -5,8 +5,7 @@
     "data": ["security/ir.model.access.csv", "views/ai_views.xml", "data/ai_data.xml"],
     "assets": {
         "web.assets_backend": [
-            "ofitec_ai_advanced/static/src/js/ai_dashboard.js",
-            "ofitec_ai_advanced/static/src/xml/ai_dashboard.xml",
+            "ofitec_ai_advanced/static/src/js/ai_dashboard.js"
         ]
     },
     "external_dependencies": {

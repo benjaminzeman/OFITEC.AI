@@ -1,0 +1,36 @@
+body.dark-mode {
+  background-color: var(--of-bg-dark);
+  color: var(--of-text-light);
+  font-family: var(--of-font-base, 'Inter', 'Poppins', system-ui, -apple-system, sans-serif);
+
+  .o_main_navbar {
+    background: linear-gradient(90deg, var(--of-secondary) 0%, var(--of-primary) 100%);
+    color: #fff;
+    .o_menu_brand { filter: brightness(1.1); }
+  }
+
+  .btn-primary {
+    background-color: var(--of-primary);
+    border-radius: var(--of-radius, 14px);
+    border: none;
+    &:hover { background-color: color-mix(in srgb, var(--of-primary) 85%, white 15%); }
+  }
+
+  .o_form_view, .o_list_view, .o_kanban_view {
+    .o_form_sheet_bg, .o_content, .o_kanban_group, table.o_list_view {
+      background: rgba(30,30,30,0.8);
+      backdrop-filter: blur(8px);
+      border-radius: var(--of-radius, 14px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    }
+  }
+
+  .card, .o_stat_info, .o_statusbar_buttons {
+    background: rgba(22, 30, 46, 0.9);
+    border-radius: var(--of-radius, 14px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  }
+
+  a, .btn-link { color: var(--of-accent-cyan); }
+  .text-accent { color: var(--of-accent); }
+}

@@ -53,75 +53,17 @@
                                 </div>
                             </div>
 
-                            <!-- Panel de Gestión de Obra -->
-                            <div class="oe_dashboard_row">
-                                <div class="oe_dashboard_column">
-                                    <div class="oe_dashboard_section">
-                                        <h3>📊 Gestión de Obra</h3>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h5>Reportes Recientes</h5>
-                                                <div class="oe_dashboard_list">
-                                                    <!-- Lista de reportes recientes -->
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5>Incidentes Activos</h5>
-                                                <div class="oe_dashboard_list">
-                                                    <!-- Lista de incidentes -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Panel de Riesgos -->
-                            <div class="oe_dashboard_row">
-                                <div class="oe_dashboard_column">
-                                    <div class="oe_dashboard_section">
-                                        <h3>🎯 Gestión de Riesgos</h3>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="oe_dashboard_card">
-                                                    <h5>Riesgos por Categoría</h5>
-                                                    <canvas id="risksByCategoryChart" width="200" height="150"></canvas>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="oe_dashboard_card">
-                                                    <h5>Exposición al Riesgo</h5>
-                                                    <div class="oe_metric">
-                                                        <span class="oe_metric_value">$<field name="project_id" readonly="1"/></span>
-                                                        <span class="oe_metric_label">Total Exposición</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="oe_dashboard_card">
-                                                    <h5>Riesgos Críticos</h5>
-                                                    <div class="oe_metric">
-                                                        <span class="oe_metric_value"><field name="project_id" readonly="1"/></span>
-                                                        <span class="oe_metric_label">Activos</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- Panel Financiero -->
                             <div class="oe_dashboard_row">
                                 <div class="oe_dashboard_column">
                                     <div class="oe_dashboard_section">
-                                        <h3>💰 Gestión Financiera</h3>
+                                        <h3>Resumen Financiero</h3>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h5>Resumen Presupuestario</h5>
-                                                <div class="oe_financial_summary">
+                                                <h5>Presupuesto</h5>
+                                                <div class="oe_budget_box">
                                                     <div class="oe_budget_item">
-                                                        <span class="oe_label">Presupuesto Total:</span>
+                                                        <span class="oe_label">Monto Presupuesto:</span>
                                                         <span class="oe_value"><field name="budget_amount" widget="monetary" readonly="1"/></span>
                                                     </div>
                                                     <div class="oe_budget_item">
@@ -143,27 +85,9 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <h5>Tendencia de Costos</h5>
-                                                <canvas id="costTrendChart" width="300" height="200"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Panel de Alertas -->
-                            <div class="oe_dashboard_row">
-                                <div class="oe_dashboard_column">
-                                    <div class="oe_dashboard_section">
-                                        <h3>🚨 Alertas y Notificaciones</h3>
-                                        <div class="oe_alerts_container">
-                                            <div class="alert alert-danger" role="alert">
-                                                <strong>⚠️ Riesgos Críticos:</strong> Revisar riesgos de alta prioridad
-                                            </div>
-                                            <div class="alert alert-warning" role="alert">
-                                                <strong>💰 Varianza Presupuestaria:</strong> Costos exceden presupuesto en <field name="variance_percentage" readonly="1"/>%
-                                            </div>
-                                            <div class="alert alert-info" role="alert">
-                                                <strong>📊 Reportes Pendientes:</strong> 3 reportes diarios pendientes de aprobación
+                                                <div style="height:260px">
+                                                    <canvas id="costTrendChart"></canvas>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -187,6 +111,7 @@
         </record>
 
         <!-- Menú Principal del Dashboard -->
-        <menuitem id="menu_executive_dashboard" name="Dashboard Ejecutivo" parent="menu_ofitec_root" sequence="10" action="action_executive_dashboard"/>
+        <menuitem id="menu_executive_dashboard" name="Dashboard Ejecutivo" parent="ofitec_core.menu_ofitec_root" sequence="10" action="action_executive_dashboard"/>
     </data>
 </odoo>
+

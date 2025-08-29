@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+  <!-- Demo Project -->
+  <record id="of_demo_project" model="project.project">
+    <field name="name">Proyecto Demo OFITEC</field>
+  </record>
+
+  <!-- Demo Budget linked to project -->
+  <record id="of_demo_budget" model="ofitec.project.financials">
+    <field name="name">Presupuesto Demo</field>
+    <field name="project_id" ref="of_demo_project"/>
+    <field name="budget_amount">100000</field>
+    <field name="start_date">2025-05-01</field>
+    <field name="end_date">2025-12-31</field>
+    <field name="cost_rate">30</field>
+    <field name="material_cost_rate">20</field>
+    <field name="equipment_cost_rate">10</field>
+    <field name="state">active</field>
+  </record>
+
+  <!-- Approved Daily Reports across recent months -->
+  <record id="of_demo_report_1" model="ofitec.daily.report">
+    <field name="name">Reporte 1</field>
+    <field name="project_id" ref="of_demo_project"/>
+    <field name="date">2025-05-05</field>
+    <field name="hours_worked">8</field>
+    <field name="progress">5</field>
+    <field name="description">Cimentación</field>
+    <field name="state">approved</field>
+  </record>
+  <record id="of_demo_report_2" model="ofitec.daily.report">
+    <field name="name">Reporte 2</field>
+    <field name="project_id" ref="of_demo_project"/>
+    <field name="date">2025-06-10</field>
+    <field name="hours_worked">7.5</field>
+    <field name="progress">12</field>
+    <field name="description">Estructura</field>
+    <field name="state">approved</field>
+  </record>
+  <record id="of_demo_report_3" model="ofitec.daily.report">
+    <field name="name">Reporte 3</field>
+    <field name="project_id" ref="of_demo_project"/>
+    <field name="date">2025-07-08</field>
+    <field name="hours_worked">9</field>
+    <field name="progress">20</field>
+    <field name="description">Alzados</field>
+    <field name="state">approved</field>
+  </record>
+  <record id="of_demo_report_4" model="ofitec.daily.report">
+    <field name="name">Reporte 4</field>
+    <field name="project_id" ref="of_demo_project"/>
+    <field name="date">2025-08-12</field>
+    <field name="hours_worked">8.5</field>
+    <field name="progress">28</field>
+    <field name="description">Terminaciones</field>
+    <field name="state">approved</field>
+  </record>
+  <record id="of_demo_report_5" model="ofitec.daily.report">
+    <field name="name">Reporte 5</field>
+    <field name="project_id" ref="of_demo_project"/>
+    <field name="date">2025-08-22</field>
+    <field name="hours_worked">7</field>
+    <field name="progress">33</field>
+    <field name="description">Instalaciones</field>
+    <field name="state">approved</field>
+  </record>
+</odoo>

@@ -209,9 +209,12 @@ class NextAction(models.Model):
                 actions.append(
                     {
                         "name": f"Revisar varianza presupuestaria alta en {budget.project_id.name}",
-                        "description": f"El proyecto presenta una varianza presupuestaria de {budget.variance_percentage:.1f}%. "
-                        f"Costo estimado total: ${budget.estimated_total_cost:,.0f}. "
-                        f"Presupuesto original: ${budget.budget_amount:,.0f}.",
+                        "description": (
+                            "El proyecto presenta una varianza presupuestaria de "
+                            f"{budget.variance_percentage:.1f}%. "
+                            f"Costo estimado total: ${budget.estimated_total_cost:,.0f}. "
+                            f"Presupuesto original: ${budget.budget_amount:,.0f}."
+                        ),
                         "action_type": (
                             "urgent" if budget.variance_percentage > 25 else "planned"
                         ),
@@ -272,7 +275,10 @@ class NextAction(models.Model):
                     "recommended_actions": incident.preventive_action
                     or "Investigar causa raíz y implementar solución",
                     "expected_benefits": "Resolución del incidente y prevención de recurrencia",
-                    "required_resources": f'Responsable: {incident.responsible_id.name if incident.responsible_id else "Por asignar"}',
+                    "required_resources": (
+                        "Responsable: "
+                        f"{incident.responsible_id.name if incident.responsible_id else 'Por asignar'}"
+                    ),
                     "deadline": incident.deadline
                     or (datetime.now().date() + timedelta(days=3)),
                     "ai_model_used": "Incident Analysis Engine v1.0",

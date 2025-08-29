@@ -7,3 +7,7 @@ scikit-learn
 xgboost
 lightgbm
 redis>=5
+matplotlib
+seaborn
+requests
+tensorflow

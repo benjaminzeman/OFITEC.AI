@@ -1,0 +1,34 @@
+body.light-mode {
+  background-color: var(--of-bg-light);
+  color: var(--of-text-dark);
+  font-family: var(--of-font-base, 'Inter', 'Poppins', system-ui, -apple-system, sans-serif);
+
+  .o_main_navbar {
+    background: linear-gradient(90deg, var(--of-primary) 0%, color-mix(in srgb, var(--of-primary) 80%, white 20%) 100%);
+    color: #fff;
+  }
+
+  .btn-primary {
+    background-color: var(--of-primary);
+    border-radius: var(--of-radius, 14px);
+    border: none;
+    &:hover { background-color: color-mix(in srgb, var(--of-primary) 85%, black 15%); }
+  }
+
+  .o_form_view, .o_list_view, .o_kanban_view {
+    .o_form_sheet_bg, .o_content, .o_kanban_group, table.o_list_view {
+      background: #ffffffaa;
+      backdrop-filter: blur(6px);
+      border-radius: var(--of-radius, 14px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+  }
+
+  .card, .o_stat_info, .o_statusbar_buttons {
+    background: #fff;
+    border-radius: var(--of-radius, 14px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.07);
+  }
+  a, .btn-link { color: var(--of-primary); }
+  .text-accent { color: var(--of-accent); }
+}

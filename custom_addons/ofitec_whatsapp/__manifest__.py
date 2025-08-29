@@ -1,5 +1,5 @@
 {
-    "name": "OFITEC – WhatsApp Business Integration",
+    "name": "OFITEC - WhatsApp Business Integration",
     "version": "16.0.1.0.0",
     "depends": ["base", "web", "ofitec_core", "mail"],
     "data": [
@@ -18,5 +18,8 @@
     "external_dependencies": {"python": ["requests"]},
     "license": "LGPL-3",
     "author": "OFITEC",
-    "description": "Integración completa con WhatsApp Business API para notificaciones inteligentes y comunicación bidireccional.",
+    "description": (
+        "Integración completa con WhatsApp Business API para notificaciones "
+        "inteligentes y comunicación bidireccional."
+    ),
 }

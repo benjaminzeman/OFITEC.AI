@@ -1,0 +1,24 @@
+// Paleta ajustada a la maqueta (azules profundos + acentos turquesa/verde)
+$primary-color: #1E3A8A;   // Indigo 800
+$secondary-color: #0B1E3D; // Navy profundo
+$accent-color: #10B981;    // Verde turquesa
+$accent-cyan: #22D3EE;     // Cyan para highlights
+$warning-color: #F59E0B;   // Amber 500
+$error-color: #EF4444;     // Red 500
+
+// Tipografía
+$font-family-base: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+$border-radius-base: 14px;
+
+:root {
+  --of-primary: #1E3A8A;
+  --of-secondary: #0B1E3D;
+  --of-accent: #10B981;
+  --of-accent-cyan: #22D3EE;
+  --of-bg-dark: #0E1626;
+  --of-bg-light: #F4F7FB;
+  --of-surface-dark: #121A2B;
+  --of-surface-light: #FFFFFF;
+  --of-text-dark: #111827;
+  --of-text-light: #E5E7EB;
+}

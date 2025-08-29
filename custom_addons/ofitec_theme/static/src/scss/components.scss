@@ -1,0 +1,135 @@
+/* Global layout tweaks */
+.o_web_client {
+  background: var(--of-bg-light);
+}
+
+body.dark-mode .o_web_client {
+  background: var(--of-bg-dark);
+}
+
+/* Navbar */
+.o_main_navbar {
+  border: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.o_main_navbar .o_menu_brand {
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+/* Control panel */
+.o_control_panel {
+  border-radius: var(--of-radius, 14px);
+  padding: 10px 14px;
+  margin: 8px 12px;
+  background: var(--of-surface-light);
+}
+body.dark-mode .o_control_panel {
+  background: var(--of-surface-dark);
+}
+
+/* Cards & containers */
+.of-card, .o_kanban_record, .o_form_view .o_form_sheet_bg, .o_list_view table {
+  border-radius: var(--of-radius, 14px);
+}
+
+/* Links and accents */
+a, .btn-link { color: var(--of-primary); }
+body.dark-mode a, body.dark-mode .btn-link { color: var(--of-accent-cyan); }
+
+/* Chart palette variables */
+:root {
+  --of-chart-1: #22D3EE; /* cyan */
+  --of-chart-2: #10B981; /* emerald */
+  --of-chart-3: #93C5FD; /* indigo-200 */
+  --of-chart-4: #F59E0B; /* amber */
+  --of-chart-5: #EF4444; /* red */
+}
+
+/* Odoo graph view (generic tinting) */
+.o_graph_view .o_graph {
+  /* improve readability on dark */
+  color: inherit;
+}
+
+/* KPI cards used in NextAction dashboard */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+  padding: 20px 24px;
+  border-radius: $border-radius-base;
+  box-shadow: 0 10px 28px rgba(0,0,0,.08);
+}
+body.dark-mode .dashboard-header {
+  background: linear-gradient(90deg, rgba(18,26,43,.92), rgba(18,26,43,.86));
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.metric-card {
+  border-left: 5px solid var(--of-primary);
+  padding: 18px 20px;
+}
+.metric-card.metric-critical { border-color: var(--of-chart-5); }
+.metric-card.metric-high { border-color: var(--of-chart-4); }
+.metric-card.metric-pending { border-color: var(--of-primary); }
+.metric-card.metric-completed { border-color: var(--of-chart-2); }
+
+.metric-title {
+  font-size: .875rem;
+  color: var(--of-muted, #6b7280);
+  margin-bottom: 6px;
+}
+.metric-value {
+  font-size: 2.25rem; /* ~36px */
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.metric-icon { opacity: .9; margin-right: 8px; }
+
+.section-title { color: var(--of-text-dark); }
+body.dark-mode .section-title { color: var(--of-text-light); }
+
+/* Urgent actions */
+.urgent-actions-section .urgent-action-item {
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: $border-radius-base;
+  padding: 12px 14px;
+  background: var(--of-surface-light);
+}
+body.dark-mode .urgent-actions-section .urgent-action-item {
+  border-color: rgba(255,255,255,.06);
+  background: var(--of-surface-dark);
+}
+
+.urgent-actions-section .action-priority {
+  font-weight: 700;
+  color: var(--of-primary);
+}
+.urgent-actions-section .priority-1 .action-priority { color: var(--of-chart-5); }
+.urgent-actions-section .priority-2 .action-priority { color: var(--of-chart-4); }
+
+/* Mobile */
+@media (max-width: 992px) {
+  .o_control_panel { margin: 6px; padding: 8px 10px; }
+  .dashboard-header { padding: 14px 16px; }
+}
+
+/* Override NextAction dashboard background to match theme */
+.ofitec-next-action-dashboard {
+  background: linear-gradient(135deg, rgba(14,22,38,1) 0%, rgba(30,58,138,1) 100%);
+}
+body.light-mode .ofitec-next-action-dashboard {
+  background: linear-gradient(135deg, #ecf3ff 0%, #f5f7fb 100%);
+}
+
+.ofitec-next-action-dashboard .metric-icon { font-size: 2.2rem; }
+.ofitec-next-action-dashboard .metric-card { transition: transform .2s ease; }
+.ofitec-next-action-dashboard .metric-card:hover { transform: translateY(-3px); }
