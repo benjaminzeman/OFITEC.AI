@@ -1,1 +1,1 @@
-from . import risk_record
+from . import risk_record  # noqa: F401

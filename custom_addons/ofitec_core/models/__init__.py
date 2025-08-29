@@ -1,1 +1,1 @@
-from . import core_model
+from . import core_model  # noqa: F401

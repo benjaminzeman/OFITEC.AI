@@ -3,4 +3,4 @@
 WhatsApp Controllers
 """
 
-from . import whatsapp_controller
+from . import whatsapp_controller  # noqa: F401

@@ -7,20 +7,19 @@ Implements ML models, predictive analytics, and intelligent automation
 import logging
 import json
 import numpy as np
-import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 from sklearn.ensemble import (
     RandomForestRegressor,
     GradientBoostingClassifier,
     GradientBoostingRegressor,
 )
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error, accuracy_score, classification_report
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.metrics import mean_absolute_error, accuracy_score
+from sklearn.preprocessing import StandardScaler
 import xgboost as xgb
 import lightgbm as lgb
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 

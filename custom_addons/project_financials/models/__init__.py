@@ -1,1 +1,1 @@
-from . import project_budget
+from . import project_budget  # noqa: F401

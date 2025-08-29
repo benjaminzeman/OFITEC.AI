@@ -1,7 +1,5 @@
 from odoo import models, fields, api
-from datetime import datetime, timedelta
-import re
-import json
+from datetime import datetime
 
 
 class CommandPalette(models.Model):

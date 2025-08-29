@@ -18,7 +18,6 @@ def assign_accounting_permissions():
         os.environ["DB_NAME"] = "ofitec"
 
         from odoo import api, SUPERUSER_ID
-        from odoo.tools import config
         from odoo.service.db import exp_db_exists
 
         # Verificar conexión a BD
@@ -124,7 +123,11 @@ def create_custom_module_access(model_name, group_name="Internal User"):
         group_id = group_result[0]
 
         # Crear regla de acceso con permisos completos
-        insert_query = "INSERT INTO ir_model_access (model_id, group_id, perm_read, perm_write, perm_create, perm_unlink, name) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        insert_query = (
+            "INSERT INTO ir_model_access "
+            "(model_id, group_id, perm_read, perm_write, perm_create, perm_unlink, name) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        )
         cur.execute(
             insert_query,
             (

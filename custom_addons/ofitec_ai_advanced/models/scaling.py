@@ -10,10 +10,9 @@ except ImportError:  # Optional dependency; module should still load without Red
     redis = None
 import json
 import logging
-import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -276,7 +275,6 @@ class AIScalingConfiguration(models.Model):
     def _ip_hash_selection(self, worker_nodes):
         """IP hash-based selection"""
         import hashlib
-        import socket
 
         # Get client IP (simplified)
         client_ip = self.env.context.get("client_ip", "127.0.0.1")
@@ -486,7 +484,10 @@ class AIScalingConfiguration(models.Model):
                 alerts.append(
                     {
                         "type": "cpu",
-                        "message": f'CPU usage ({metrics["cpu_usage"]}%) exceeds threshold ({self.alert_threshold_cpu}%)',
+                        "message": (
+                            f'CPU usage ({metrics["cpu_usage"]}%) exceeds threshold '
+                            f'({self.alert_threshold_cpu}%)'
+                        ),
                     }
                 )
 
@@ -495,7 +496,10 @@ class AIScalingConfiguration(models.Model):
                 alerts.append(
                     {
                         "type": "memory",
-                        "message": f'Memory usage ({metrics["memory_usage"]}%) exceeds threshold ({self.alert_threshold_memory}%)',
+                        "message": (
+                            f'Memory usage ({metrics["memory_usage"]}%) exceeds threshold '
+                            f'({self.alert_threshold_memory}%)'
+                        ),
                     }
                 )
 
@@ -504,7 +508,10 @@ class AIScalingConfiguration(models.Model):
                 alerts.append(
                     {
                         "type": "response_time",
-                        "message": f"Response time ({self.avg_response_time}ms) exceeds threshold ({self.alert_threshold_response_time}ms)",
+                        "message": (
+                            f"Response time ({self.avg_response_time}ms) exceeds threshold "
+                            f"({self.alert_threshold_response_time}ms)"
+                        ),
                     }
                 )
 

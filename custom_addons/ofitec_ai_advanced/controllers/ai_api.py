@@ -4,12 +4,10 @@ REST API Controller for Advanced AI Module
 Provides endpoints for ML predictions, analytics, and real-time data
 """
 
-import json
 import logging
 from datetime import datetime
 from odoo import http
-from odoo.http import request, Response
-from odoo.exceptions import UserError, AccessError
+from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 

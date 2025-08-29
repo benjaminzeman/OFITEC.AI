@@ -148,7 +148,10 @@ class ExecutiveDashboard(models.Model):
                 {
                     "type": "risk",
                     "title": f"Nuevo riesgo: {risk.name}",
-                    "description": f'Categoría: {dict(risk._fields["risk_category"].selection).get(risk.risk_category)}',
+                    "description": (
+                        f'Categoría: '
+                        f"{dict(risk._fields['risk_category'].selection).get(risk.risk_category)}"
+                    ),
                     "date": risk.identification_date,
                     "user": risk.user_id.name,
                 }
@@ -169,7 +172,10 @@ class ExecutiveDashboard(models.Model):
                 {
                     "type": "incident",
                     "title": f"Incidente resuelto: {incident.name}",
-                    "description": f'Tipo: {dict(incident._fields["incident_type"].selection).get(incident.incident_type)}',
+                    "description": (
+                        f'Tipo: '
+                        f"{dict(incident._fields['incident_type'].selection).get(incident.incident_type)}"
+                    ),
                     "date": incident.date,
                     "user": incident.user_id.name,
                 }

@@ -3,7 +3,13 @@ from odoo import http
 from odoo.http import request
 
 try:
-    from prometheus_client import CollectorRegistry, Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST  # type: ignore
+    from prometheus_client import (  # type: ignore
+        CollectorRegistry,
+        Counter,
+        Histogram,
+        generate_latest,
+        CONTENT_TYPE_LATEST,
+    )
 
     PROM_AVAILABLE = True
 except Exception:

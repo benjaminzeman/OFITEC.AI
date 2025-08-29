@@ -1,6 +1,5 @@
 from odoo import http
 from odoo.http import request
-import json
 from datetime import datetime, timedelta
 
 

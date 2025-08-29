@@ -24,5 +24,8 @@
     },
     "license": "LGPL-3",
     "author": "OFITEC",
-    "description": "Sistema avanzado de IA con modelos de ML predictivos, analytics en tiempo real, API REST completa y escalabilidad horizontal.",
+    "description": (
+        "Sistema avanzado de IA con modelos de ML predictivos, analytics en tiempo "
+        "real, API REST completa y escalabilidad horizontal."
+    ),
 }

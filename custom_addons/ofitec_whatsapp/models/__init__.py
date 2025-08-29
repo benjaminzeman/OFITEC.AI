@@ -3,4 +3,4 @@
 WhatsApp Models
 """
 
-from . import whatsapp
+from . import whatsapp  # noqa: F401

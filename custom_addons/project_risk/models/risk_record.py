@@ -1,5 +1,4 @@
 from odoo import models, fields, api
-from datetime import timedelta
 
 
 class RiskRecord(models.Model):

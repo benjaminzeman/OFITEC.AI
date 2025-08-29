@@ -4,10 +4,10 @@ Advanced AI Module for OFITEC.AI
 Initialization file for the AI advanced module
 """
 
-from . import models
-from . import controllers
-from . import security
-from . import config
+from . import models  # noqa: F401
+from . import controllers  # noqa: F401
+from . import security  # noqa: F401
+from . import config  # noqa: F401
 
 # Module metadata
 __version__ = "1.0.0"
@@ -17,27 +17,30 @@ __description__ = (
 )
 
 # Import main classes for easy access
-from .models.ai_advanced import (
+from .models.ai_advanced import (  # noqa: F401
     AIAnalyticsEngine,
     AIPredictiveAnalytics,
     AIRealTimeAnalytics,
     AIAPIController,
 )
 
-from .controllers.ai_api import (
+from .controllers.ai_api import (  # noqa: F401
     AIAnalyticsAPI,
     AIWebhookController,
     AISecurityController,
 )
 
-from .security.ai_security import (
+from .security.ai_security import (  # noqa: F401
     AIAPIAccessLog,
     AIWebhookSecurity,
     AIEncryption,
     AISecurityAudit,
 )
 
-from .models.scaling import AIScalingConfiguration, AIMonitoringDashboard
+from .models.scaling import (  # noqa: F401
+    AIScalingConfiguration,
+    AIMonitoringDashboard,
+)
 
 
 # Initialize module

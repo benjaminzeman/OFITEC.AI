@@ -1,6 +1,5 @@
 from odoo import models, fields, api
 from datetime import datetime, timedelta
-import json
 
 
 class NextAction(models.Model):
@@ -225,8 +224,10 @@ class NextAction(models.Model):
                         "urgency_score": (
                             9.0 if budget.variance_percentage > 25 else 6.0
                         ),
-                        "recommended_actions": "Revisar causas de la varianza, ajustar presupuesto si es necesario, "
-                        "implementar medidas de control de costos",
+                        "recommended_actions": (
+                            "Revisar causas de la varianza, ajustar presupuesto si es necesario, "
+                            "implementar medidas de control de costos"
+                        ),
                         "expected_benefits": "Mejor control financiero y prevención de desviaciones mayores",
                         "required_resources": "Equipo financiero, datos de costos actualizados",
                         "deadline": datetime.now().date() + timedelta(days=5),

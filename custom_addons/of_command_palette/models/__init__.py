@@ -1,1 +1,1 @@
-from . import command_palette
+from . import command_palette  # noqa: F401

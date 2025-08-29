@@ -1,1 +1,1 @@
-from . import security
+from . import security  # noqa: F401

@@ -1,1 +1,1 @@
-from . import vector_indexer
+from . import vector_indexer  # noqa: F401
