@@ -152,16 +152,3 @@ class SiteIncident(models.Model):
                 "user_id": report.user_id.id,
             }
         )
-        """Crear incidente desde un reporte diario"""
-        report = self.env["ofitec.daily.report"].browse(report_id)
-        return self.create(
-            {
-                "project_id": report.project_id.id,
-                "report_id": report.id,
-                "date": report.date,
-                "description": incident_data.get("description", ""),
-                "incident_type": incident_data.get("type", "other"),
-                "severity": incident_data.get("severity", "medium"),
-                "user_id": report.user_id.id,
-            }
-        )

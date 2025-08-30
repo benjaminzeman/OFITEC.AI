@@ -1,13 +1,22 @@
 from odoo import http
 from odoo.http import request
+import json
 
 
 class OfitecCoreController(http.Controller):
 
     @http.route("/ofitec/api/health", type="json", auth="public", methods=["GET"])
     def health_check(self):
-        """Endpoint de verificación de salud del sistema"""
+        """Endpoint de verificación de salud (JSON-RPC)"""
         return {"status": "ok", "message": "OFITEC Core API is running"}
+
+    @http.route("/ofitec/health", type="http", auth="public", methods=["GET"])  # simple HTTP
+    def health_http(self):
+        """Health check simple por HTTP plano (para smoke tests y load balancers)."""
+        payload = {"status": "ok", "service": "ofitec_core", "version": "16"}
+        return request.make_response(
+            json.dumps(payload), headers=[("Content-Type", "application/json")]
+        )
 
     @http.route("/ofitec/api/projects", type="json", auth="user", methods=["GET"])
     def get_projects(self):

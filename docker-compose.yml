@@ -22,7 +22,7 @@ services:
       USER: odoo
       PASSWORD: odoo
     ports:
-      - "10069:8069"
+      - "8069:8069"
     volumes:
       - ./custom_addons:/mnt/extra-addons
       - odoo_data:/var/lib/odoo

@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Vistas básicas para ofitec_visual -->
+    <data>
+        <record id="view_ofitec_visual_tree" model="ir.ui.view">
+            <field name="name">ofitec.visual.tree</field>
+            <field name="model">ofitec.visual</field>
+            <field name="arch" type="xml">
+                <tree string="Visual Elements" create="true">
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_ofitec_visual_form" model="ir.ui.view">
+            <field name="name">ofitec.visual.form</field>
+            <field name="model">ofitec.visual</field>
+            <field name="arch" type="xml">
+                <form string="Visual Element">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_ofitec_visual" model="ir.actions.act_window">
+            <field name="name">Visual</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ofitec.visual</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_ofitec_visual_root" name="Visual" parent="ofitec_core.menu_ofitec_root" action="action_ofitec_visual" sequence="99"/>
+    </data>
 </odoo>
+

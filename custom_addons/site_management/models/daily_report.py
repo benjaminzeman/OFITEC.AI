@@ -170,23 +170,6 @@ class DailyReport(models.Model):
                     "partner_ids": [(4, self.project_id.user_id.partner_id.id)],
                 }
             )
-        """Actualizar progreso del proyecto basado en reportes"""
-        if self.project_id:
-            # Calcular progreso promedio de los últimos reportes
-            recent_reports = self.search(
-                [
-                    ("project_id", "=", self.project_id.id),
-                    ("state", "=", "approved"),
-                    ("date", ">=", fields.Date.today() - timedelta(days=30)),
-                ],
-                limit=10,
-            )
-
-            if recent_reports:
-                avg_progress = sum(r.progress for r in recent_reports) / len(
-                    recent_reports
-                )
-                self.project_id.write({"progress": avg_progress})
 
     @api.model
     def create_from_whatsapp(self, message_data):

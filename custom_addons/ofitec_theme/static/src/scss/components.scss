@@ -59,7 +59,7 @@ body.dark-mode a, body.dark-mode .btn-link { color: var(--of-accent-cyan); }
   justify-content: space-between;
   background: linear-gradient(90deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
   padding: 20px 24px;
-  border-radius: $border-radius-base;
+  border-radius: var(--of-radius, 14px);
   box-shadow: 0 10px 28px rgba(0,0,0,.08);
 }
 body.dark-mode .dashboard-header {
@@ -100,7 +100,7 @@ body.dark-mode .section-title { color: var(--of-text-light); }
 /* Urgent actions */
 .urgent-actions-section .urgent-action-item {
   border: 1px solid rgba(0,0,0,.06);
-  border-radius: $border-radius-base;
+  border-radius: var(--of-radius, 14px);
   padding: 12px 14px;
   background: var(--of-surface-light);
 }
